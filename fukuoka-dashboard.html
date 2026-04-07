@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>リベ大デンタルクリニック福岡院 | 経営レポート</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0f4f4; color: #1a2e2e; font-size: 14px; }
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #0a4f4f 0%, #0d6e6e 55%, #1a8a8a 100%);
+  color: white;
+  padding: 28px 24px 36px;
+}
+.header-badge {
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 12px;
+  margin-bottom: 16px;
+  letter-spacing: 0.03em;
+}
+.header h1 { font-size: 28px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.header .subtitle { font-size: 13px; opacity: 0.82; margin-top: 6px; }
+.header .updated { font-size: 12px; opacity: 0.65; margin-top: 8px; }
+
+/* Nav */
+.nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  border-bottom: 1px solid #dce8e8;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.nav {
+  display: flex;
+  overflow-x: auto;
+  padding: 0 16px;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  display: block;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #4a6a6a;
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.nav a:hover { color: #0d6e6e; border-bottom-color: #c0dede; }
+.nav a.active { color: #0d6e6e; border-bottom-color: #0d6e6e; background: #f0fafa; }
+
+/* Content */
+.content { max-width: 900px; margin: 0 auto; padding: 28px 16px; }
+
+/* Section */
+.section { margin-bottom: 36px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ccdede;
+}
+.section-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  background: #e6f4f4;
+}
+.section-header h2 { font-size: 18px; font-weight: 700; color: #0a4f4f; }
+
+/* Metrics grid */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (max-width: 620px) { .metrics { grid-template-columns: repeat(2, 1fr); } }
+.metric {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.metric .label { font-size: 11px; color: #6a8a8a; margin-bottom: 6px; }
+.metric .value { font-size: 26px; font-weight: 700; color: #0d6e6e; line-height: 1.1; }
+.metric .sub { font-size: 11px; color: #8aacac; margin-top: 5px; }
+
+/* Breakdown */
+.breakdown {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  margin-bottom: 16px;
+}
+.breakdown h5 { font-size: 12px; color: #6a8a8a; margin-bottom: 10px; font-weight: 600; }
+.breakdown-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.seg-insurance { background: #0d6e6e; }
+.seg-jihi { background: #f0a050; }
+.seg-kyosei { background: #a855f7; }
+.seg-hanpan { background: #22c55e; }
+.breakdown-legend { display: flex; flex-wrap: wrap; gap: 14px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.legend-label { color: #4a6a6a; }
+.legend-amount { font-weight: 600; color: #1a2e2e; }
+
+/* Bar chart */
+.chart-wrap {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.chart-title { font-size: 14px; font-weight: 600; color: #1a2e2e; margin-bottom: 4px; }
+.chart-note { font-size: 11px; color: #8aacac; margin-bottom: 16px; }
+.chart-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  min-height: 160px;
+  padding-top: 8px;
+}
+.bar-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 34px; }
+.bar-value { font-size: 10px; color: #4a6a6a; white-space: nowrap; font-weight: 600; }
+.bar { background: #0d6e6e; border-radius: 3px 3px 0 0; width: 24px; transition: opacity 0.2s; cursor: default; }
+.bar:hover { opacity: 0.75; }
+.bar-label { font-size: 10px; color: #8aacac; white-space: nowrap; }
+
+/* Analysis */
+.analysis-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  margin-bottom: 16px;
+  line-height: 1.75;
+  font-size: 13px;
+  color: #2a4a4a;
+}
+.analysis-summary .sum-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0d6e6e;
+  margin-bottom: 10px;
+  display: block;
+}
+.analysis-card {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.analysis-card.card-risk {
+  border-left: 4px solid #ef4444;
+  background: #fef9f9;
+  margin-bottom: 16px;
+}
+.analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+@media (max-width: 600px) { .analysis-grid { grid-template-columns: 1fr; } }
+.analysis-card.card-good { border-left: 4px solid #22c55e; }
+.analysis-card.card-improve { border-left: 4px solid #f59e0b; }
+.analysis-card.card-action { border-left: 4px solid #0d6e6e; margin-bottom: 16px; }
+.card-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; color: #1a2e2e; }
+.analysis-card ul { padding-left: 18px; }
+.analysis-card li { font-size: 12px; color: #2a4a4a; line-height: 1.75; margin-bottom: 8px; }
+
+/* Chat table */
+.chat-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8aacac;
+  padding: 14px 14px 4px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: white;
+}
+.chat-table { width: 100%; border-collapse: collapse; font-size: 13px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.chat-table th {
+  background: #f5fafa;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  color: #4a6a6a;
+  border-bottom: 1px solid #dce8e8;
+  font-weight: 600;
+}
+.chat-table td { padding: 11px 14px; border-bottom: 1px solid #f0f6f6; vertical-align: top; }
+.chat-table td:first-child { font-weight: 500; color: #0a4f4f; }
+.chat-table td:last-child { color: #4a6a6a; }
+.chat-table tr:last-child td { border-bottom: none; }
+.chat-group-header td {
+  background: #f5fafa;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6a8a8a;
+  letter-spacing: 0.05em;
+  padding: 8px 14px;
+}
+
+/* Improve list */
+.improve-list { list-style: none; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.improve-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px solid #f0f6f6;
+  font-size: 13px;
+  color: #2a4a4a;
+}
+.improve-list li:last-child { border-bottom: none; }
+.improve-list li.done { color: #6a8a8a; }
+.status-circle {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccdede;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+}
+.improve-list li.done .status-circle {
+  background: #0d6e6e;
+  border-color: #0d6e6e;
+  color: white;
+}
+.improve-text { flex: 1; line-height: 1.5; }
+.improve-date { font-size: 11px; color: #0d6e6e; font-weight: 600; white-space: nowrap; }
+
+/* 1on1 */
+.oneon1-summary-line { font-size: 14px; color: #0d6e6e; font-weight: 600; margin-bottom: 18px; }
+.oneon1-group { margin-bottom: 24px; }
+.oneon1-group-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6a8a8a;
+  margin-bottom: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e0ecec;
+  padding-bottom: 6px;
+}
+.oneon1-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.oneon1-card {
+  background: white;
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1.5px solid #dce8e8;
+}
+.oneon1-card.done { border-color: #0d6e6e; background: #f0faf8; }
+.oneon1-card.scheduled { border-color: #f0a050; background: #fdf8f0; }
+.oneon1-name { font-size: 13px; font-weight: 600; color: #1a2e2e; margin-bottom: 4px; }
+.oneon1-status { font-size: 11px; color: #8aacac; }
+.oneon1-card.done .oneon1-status { color: #0d6e6e; }
+.oneon1-card.scheduled .oneon1-status { color: #d08030; }
+
+/* Placeholder note */
+.placeholder-note {
+  background: #fffbea;
+  border: 1px dashed #e8c840;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #7a6020;
+  margin-bottom: 16px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px 16px;
+  font-size: 12px;
+  color: #8aacac;
+  border-top: 1px solid #dce8e8;
+  background: white;
+  margin-top: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">リベ大デンタルクリニック</div>
+  <h1>福岡院 経営レポート</h1>
+  <div class="subtitle">Chatworkログを自動解析し、毎朝7時に最新状況を更新します。</div>
+  <div class="updated" id="headerDate">最終更新: 2026年03月28日 08:47</div>
+</div>
+
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="#perf" class="active">診療実績</a>
+    <a href="#analysis">経営分析</a>
+    <a href="#action">課題・アクション</a>
+    <a href="#chat">チャット</a>
+    <a href="#improve">取り組み</a>
+    <a href="#oneon1">1on1面談</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <!-- 診療実績 -->
+  <div class="section" id="perf">
+    <div class="section-header">
+      <div class="section-icon">📊</div>
+      <h2>診療数値実績</h2>
+    </div>
+
+    <div class="placeholder-note">⚠️ 以下はプレースホルダーデータです。実際の数値に更新してください。</div>
+
+    <div class="metrics" id="metricsGrid"></div>
+    <div class="breakdown" id="breakdownCard"></div>
+    <div class="chart-wrap">
+      <div class="chart-title" id="chartTitle">日別売上推移（2026年03月）</div>
+      <div class="chart-note">※ 保険＋自費＋矯正＋物販の合計</div>
+      <div class="chart-bar" id="chartBar"></div>
+    </div>
+  </div>
+
+  <!-- 経営分析 -->
+  <div class="section" id="analysis">
+    <div class="section-header">
+      <div class="section-icon">🧠</div>
+      <h2>経営分析</h2>
+    </div>
+    <div class="placeholder-note">⚠️ 以下はプレースホルダーデータです。Chatwork自動解析後に更新されます。</div>
+    <div id="analysisSummaryCard"></div>
+    <div id="analysisRiskCard"></div>
+  </div>
+
+  <!-- 課題・アクション -->
+  <div class="section" id="action">
+    <div class="section-header">
+      <div class="section-icon">🎯</div>
+      <h2>課題とアクションプラン</h2>
+    </div>
+    <div id="actionContent"></div>
+  </div>
+
+  <!-- チャット -->
+  <div class="section" id="chat">
+    <div class="section-header">
+      <div class="section-icon">💬</div>
+      <h2>Chatworkチャット一覧</h2>
+    </div>
+    <div id="chatContent"></div>
+  </div>
+
+  <!-- 取り組み -->
+  <div class="section" id="improve">
+    <div class="section-header">
+      <div class="section-icon">✅</div>
+      <h2>取り組み内容</h2>
+    </div>
+    <ul class="improve-list" id="improveList"></ul>
+  </div>
+
+  <!-- 1on1 -->
+  <div class="section" id="oneon1">
+    <div class="section-header">
+      <div class="section-icon">🤝</div>
+      <h2>1on1面談状況</h2>
+    </div>
+    <div class="oneon1-summary-line" id="oneon1Summary"></div>
+    <div id="oneon1Grid"></div>
+  </div>
+
+</div><!-- /content -->
+
+<footer id="footerDate">
+  リベ大デンタルクリニック福岡院 | 経営レポート　毎朝7時自動更新 | 最終: 2026年03月28日 08:47
+</footer>
+
+<script>
+// ================================================================
+// ★ データ定義（ここを更新してください）
+// ================================================================
+var DATA = {
+  clinicName: '福岡院',
+  targetMonth: '2026年03月',
+  updatedAt: '2026年03月31日（診療日23日分）',
+  workDays: 23,
+
+  // 月次集計（単位：円）
+  monthly: {
+    total:     21_327_182,
+    insurance:  9_167_860,
+    jihi:      11_320_100,
+    kyosei:             0,
+    hanpan:       839_222,
+    avgPatients: 50,
+    jihiRate: '53',
+  },
+
+  // 日別売上（万円単位）
+  dailySales: [
+    { date: '03/03', val: 82 },  { date: '03/04', val: 64 },  { date: '03/05', val: 72 },
+    { date: '03/06', val: 84 },  { date: '03/07', val: 56 },  { date: '03/09', val: 84 },
+    { date: '03/10', val: 87 },  { date: '03/11', val: 65 },  { date: '03/12', val: 138 },
+    { date: '03/13', val: 79 },  { date: '03/14', val: 58 },  { date: '03/16', val: 267 },
+    { date: '03/17', val: 45 },  { date: '03/18', val: 216 }, { date: '03/19', val: 77 },
+    { date: '03/20', val: 99 },  { date: '03/21', val: 52 },  { date: '03/23', val: 101 },
+    { date: '03/25', val: 67 },  { date: '03/26', val: 63 },  { date: '03/27', val: 53 },
+    { date: '03/28', val: 130 }, { date: '03/30', val: 95 },
+  ],
+
+  // 経営状況サマリー
+  summary: '3月度（3/3〜3/30、23診療日）の累計売上は約2,133万円、1日平均約93万円。自費率53%（自費¥1,132万）と非常に高水準で、大型自費ケースが複数成約している。特に3/16（¥267万）・3/18（¥216万）・3/28（¥130万）・3/30（¥95万）・3/12（¥138万）に高売上を記録。3/30は自費11人¥66万と月末も高自費率を維持。1日平均患者数は50人。月間物販売上も¥84万と安定しており、診療全体のクオリティが患者満足に直結している。',
+
+  // リスク
+  risks: [
+    '【変動リスク】自費売上の大部分が特定日の大型ケースに依存している（3/16・3/18で全体の約24%）。安定した自費売上のためにはケースの分散化と、継続的な自費カウンセリングフローの標準化が必要。',
+    '【業務リスク】3/19にAirPay（カード決済）システム障害が発生。代替手段（AirPayタッチアプリ）での対応実績はあるが、障害時の対応マニュアルと練習の徹底が求められる。また決済手段の分散（QRコード等）も検討すること。',
+  ],
+
+  // 良い点
+  goodPoints: [
+    '自費率52%は業界平均を大きく上回る高水準。スタッフの自費提案力・カウンセリング力が確実に成果につながっており、院の収益構造として評価できる。',
+    '日報投稿が毎日定着しており、当日キャンセルゼロの日も複数回記録。受付スタッフが自ら気づきや改善提案を発信する自律的な文化が根付いている。',
+    '物販売上¥82万も安定確保。患者への説明・提案が自然な流れで行われており、院内の患者教育が機能している。',
+  ],
+
+  // 改善点
+  improvements: [
+    '低売上日（3/17: ¥45万、3/21: ¥52万）の原因分析が必要。特定曜日（土曜・連休前後）にアポ埋まりが低下する傾向があれば、予約枠の設計と事前リコール連絡の強化で改善できる。',
+    'melmoアプリのアップデートによりカード期限切れ登録が不可になり、二重会計時の一部決済でトラブルが発生。患者へのアプリ再登録案内フローを整備し、スムーズな会計対応を徹底すること。',
+    '矯正売上が現時点でゼロ（矯正担当医なし or 症例なし）。矯正相談導線の整備とDr連携の強化により、今後の収益柱として育成する余地がある。',
+  ],
+
+  // アクションプラン
+  actionPlans: [
+    '【院長・受付・期限：4/10】決済障害時の対応マニュアルを作成・院内共有する。AirPayタッチ・QRコード決済の操作手順を受付全員が習熟できるよう月1回の練習を導入。',
+    '【院長・DH・期限：4/15】低売上曜日の予約枠を分析し、土曜・連休前後のリコール連絡タイミングを最適化。前日リマインド送信の導入を検討する。',
+    '【院長・期限：4月中】矯正相談フローの整備を進める。既存患者リストから矯正適応ケースを抽出し、カウンセリング案内を開始。将来的な矯正売上ゼロからの改善を目指す。',
+  ],
+
+  // チャット一覧
+  chatGroups: [
+    {
+      label: '院内スタッフ間のチャット',
+      chats: [
+        { name: '【リベクリ】歯科福岡院｜日報・業務連絡チャット', usage: '日報の投稿・スタッフ間の業務連絡（監視対象）' },
+        { name: '【リベクリ】福岡院Dr_すり合わせチャット', usage: '医師間のすり合わせ・方針共有（監視対象）' },
+        { name: '【リベクリ｜福岡院】医療事務チャット', usage: '医療事務との連絡・算定調整（監視対象）' },
+        { name: '福岡院｜予約枠調整チャット', usage: '予約枠の設計・変更依頼・調整に関するチャット' },
+      ]
+    },
+    {
+      label: '外部連携のチャット',
+      chats: [
+        { name: 'マーケティングチャット', usage: 'Web集客施策（広告・MEO・SNS等）のやりとり' },
+        { name: 'HP制作チャット', usage: 'クリニックHP制作・更新のやりとり' },
+        { name: 'Instagram運用チャット', usage: 'Instagramの投稿企画・運用方針のやりとり' },
+        { name: '矯正担当医連携チャット', usage: '矯正担当医とのスケジュール・症例共有チャット' },
+      ]
+    }
+  ],
+
+  // 取り組み
+  improveItems: [
+    { text: '全スタッフとの1on1面談', done: true, date: '3月完了' },
+    { text: '日報・業務連絡チャットの整備', done: true, date: '3月完了' },
+    { text: '予約枠の最適化方針決定', done: true, date: '3月完了' },
+    { text: '自費カウンセリング資料の整備', done: false, date: '' },
+    { text: 'レセプト算定チェックリストの作成', done: false, date: '' },
+    { text: 'Instagram運用の再開・投稿ルール策定', done: false, date: '' },
+    { text: '月次KPIダッシュボードの自動更新設定', done: false, date: '' },
+  ],
+
+  // 1on1面談
+  oneon1: [
+    // 歯科医師
+    { name: '院長先生', role: '院長', status: 'done', date: '3月完了' },
+    { name: '常勤Dr', role: '常勤歯科医師', status: 'done', date: '3月完了' },
+    { name: '非常勤Dr①', role: '非常勤歯科医師', status: 'done', date: '3月完了' },
+    { name: '非常勤Dr②', role: '非常勤歯科医師', status: 'scheduled', date: '4月予定' },
+    { name: '矯正Dr', role: '矯正歯科医師', status: 'done', date: '3月完了' },
+    // 歯科衛生士
+    { name: 'DHさん①', role: '歯科衛生士', status: 'done', date: '3月完了' },
+    { name: 'DHさん②', role: '歯科衛生士', status: 'done', date: '3月完了' },
+    { name: 'DHさん③', role: '歯科衛生士', status: 'done', date: '3月完了' },
+    { name: 'DHさん④', role: '歯科衛生士', status: 'scheduled', date: '4月予定' },
+    // 歯科助手・受付
+    { name: '助手さん①', role: '歯科助手', status: 'done', date: '3月完了' },
+    { name: '助手さん②', role: '歯科助手', status: 'done', date: '3月完了' },
+    { name: '受付さん①', role: '受付', status: 'done', date: '3月完了' },
+    { name: '受付さん②', role: '受付', status: 'pending', date: '' },
+  ],
+};
+
+// ================================================================
+// 描画関数
+// ================================================================
+
+function fmtY(n) {
+  if (n >= 1000000) return (n / 10000).toFixed(0) + '万円';
+  if (n >= 10000)   return (n / 10000).toFixed(1) + '万円';
+  return (n || 0).toLocaleString() + '円';
+}
+function fmtYS(n) {
+  if (n >= 10000) return (n / 10000).toFixed(1) + '万円';
+  return (n || 0).toLocaleString() + '円';
+}
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function renderMetrics() {
+  var m = DATA.monthly;
+  var grid = document.getElementById('metricsGrid');
+  function mk(label, value, sub) {
+    return '<div class="metric"><div class="label">' + label + '</div><div class="value">' + value + '</div><div class="sub">' + sub + '</div></div>';
+  }
+  grid.innerHTML =
+    mk('月次売上（累計）', fmtY(m.total), DATA.workDays + '診療日分') +
+    mk('平均患者数/日', m.avgPatients + '人', DATA.workDays + '日の平均') +
+    mk('自費率', m.jihiRate + '%', '自費 ' + fmtYS(m.jihi)) +
+    mk('矯正売上', fmtYS(m.kyosei), '矯正累計');
+}
+
+function renderBreakdown() {
+  var m = DATA.monthly;
+  var total = m.total || 1;
+  var pIns  = (m.insurance / total * 100).toFixed(1);
+  var pJihi = (m.jihi      / total * 100).toFixed(1);
+  var pKyo  = (m.kyosei    / total * 100).toFixed(1);
+  var pHan  = (m.hanpan    / total * 100).toFixed(1);
+
+  function leg(color, label, amt, pct) {
+    return '<div class="legend-item">' +
+      '<div class="legend-dot" style="background:' + color + '"></div>' +
+      '<span class="legend-label">' + label + '</span>' +
+      '<span class="legend-amount">' + fmtYS(amt) + '</span>' +
+      '<span class="legend-label">(' + pct + '%)</span>' +
+      '</div>';
+  }
+
+  document.getElementById('breakdownCard').innerHTML =
+    '<h5>売上内訳</h5>' +
+    '<div class="breakdown-bar">' +
+      '<span class="seg-insurance" style="width:' + pIns  + '%"></span>' +
+      '<span class="seg-jihi"      style="width:' + pJihi + '%"></span>' +
+      '<span class="seg-kyosei"    style="width:' + pKyo  + '%"></span>' +
+      '<span class="seg-hanpan"    style="width:' + pHan  + '%"></span>' +
+    '</div>' +
+    '<div class="breakdown-legend">' +
+      leg('#0d6e6e', '保険', m.insurance, pIns) +
+      leg('#f0a050', '自費', m.jihi,      pJihi) +
+      leg('#a855f7', '矯正', m.kyosei,    pKyo) +
+      leg('#22c55e', '物販', m.hanpan,    pHan) +
+    '</div>';
+}
+
+function renderChart() {
+  var sales = DATA.dailySales;
+  var maxVal = Math.max.apply(null, sales.map(function(r){ return r.val; })) || 1;
+  var bars = sales.map(function(r) {
+    var h = Math.max(6, r.val / maxVal * 120);
+    return '<div class="bar-item">' +
+      '<div class="bar-value">' + r.val + '万</div>' +
+      '<div class="bar" style="height:' + h + 'px"></div>' +
+      '<div class="bar-label">' + r.date + '</div>' +
+      '</div>';
+  }).join('');
+  document.getElementById('chartBar').innerHTML = bars;
+}
+
+function renderAnalysis() {
+  document.getElementById('analysisSummaryCard').innerHTML =
+    '<div class="analysis-summary">' +
+    '<span class="sum-label">📝 経営状況サマリー（' + DATA.updatedAt + '）</span>' +
+    esc(DATA.summary) +
+    '</div>';
+
+  if (DATA.risks && DATA.risks.length) {
+    var lis = DATA.risks.map(function(r){ return '<li>' + esc(r) + '</li>'; }).join('');
+    document.getElementById('analysisRiskCard').innerHTML =
+      '<div class="analysis-card card-risk">' +
+      '<div class="card-title">⚠️ リスク・要注意事項</div>' +
+      '<ul>' + lis + '</ul></div>';
+  }
+}
+
+function renderAction() {
+  var html = '<div class="analysis-grid">';
+  if (DATA.goodPoints && DATA.goodPoints.length) {
+    html += '<div class="analysis-card card-good">' +
+      '<div class="card-title">✅ 良い点</div><ul>' +
+      DATA.goodPoints.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('') +
+      '</ul></div>';
+  }
+  if (DATA.improvements && DATA.improvements.length) {
+    html += '<div class="analysis-card card-improve">' +
+      '<div class="card-title">⚡ 改善が必要な点</div><ul>' +
+      DATA.improvements.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('') +
+      '</ul></div>';
+  }
+  html += '</div>';
+  if (DATA.actionPlans && DATA.actionPlans.length) {
+    html += '<div class="analysis-card card-action">' +
+      '<div class="card-title">🚀 アクションプラン</div><ul>' +
+      DATA.actionPlans.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('') +
+      '</ul></div>';
+  }
+  document.getElementById('actionContent').innerHTML = html;
+}
+
+function renderChat() {
+  var html = '<table class="chat-table"><thead><tr><th>チャット名</th><th>用途</th></tr></thead><tbody>';
+  DATA.chatGroups.forEach(function(g) {
+    html += '<tr class="chat-group-header"><td colspan="2">' + esc(g.label) + '</td></tr>';
+    g.chats.forEach(function(c) {
+      html += '<tr><td>' + esc(c.name) + '</td><td>' + esc(c.usage) + '</td></tr>';
+    });
+  });
+  html += '</tbody></table>';
+  document.getElementById('chatContent').innerHTML = html;
+}
+
+function renderImprove() {
+  document.getElementById('improveList').innerHTML = DATA.improveItems.map(function(i) {
+    var checkmark = i.done ? '✓' : '';
+    return '<li class="' + (i.done ? 'done' : '') + '">' +
+      '<div class="status-circle">' + checkmark + '</div>' +
+      '<span class="improve-text">' + esc(i.text) + '</span>' +
+      (i.date ? '<span class="improve-date">' + esc(i.date) + '</span>' : '') +
+      '</li>';
+  }).join('');
+}
+
+function renderOneon1() {
+  var done = DATA.oneon1.filter(function(s){ return s.status === 'done'; }).length;
+  document.getElementById('oneon1Summary').textContent =
+    '今月 — ' + done + ' / ' + DATA.oneon1.length + '名 完了';
+
+  var groups = [
+    { label: '歯科医師（院長・常勤・非常勤・矯正）',
+      roles: ['院長','常勤歯科医師','非常勤歯科医師','矯正歯科医師'] },
+    { label: '歯科衛生士', roles: ['歯科衛生士'] },
+    { label: '歯科助手・受付', roles: ['歯科助手','受付'] },
+  ];
+
+  var html = '';
+  groups.forEach(function(g) {
+    var members = DATA.oneon1.filter(function(s){ return g.roles.indexOf(s.role) !== -1; });
+    if (!members.length) return;
+    html += '<div class="oneon1-group"><div class="oneon1-group-title">' + g.label + '</div>';
+    html += '<div class="oneon1-grid">';
+    members.forEach(function(m) {
+      var st = m.status === 'done'      ? '✓ ' + (m.date || '完了')
+             : m.status === 'scheduled' ? '📅 ' + (m.date || '予定あり')
+             :                            '未実施';
+      html += '<div class="oneon1-card ' + m.status + '">' +
+        '<div class="oneon1-name">' + esc(m.name) + '</div>' +
+        '<div class="oneon1-status">' + st + '</div></div>';
+    });
+    html += '</div></div>';
+  });
+  document.getElementById('oneon1Grid').innerHTML = html;
+}
+
+function initNav() {
+  var sections = document.querySelectorAll('.section[id]');
+  var links    = document.querySelectorAll('.nav a');
+  window.addEventListener('scroll', function() {
+    var cur = '';
+    sections.forEach(function(s) {
+      if (window.scrollY >= s.offsetTop - 80) cur = s.id;
+    });
+    links.forEach(function(a) {
+      var on = a.getAttribute('href') === '#' + cur;
+      a.classList.toggle('active', on);
+    });
+  });
+  links.forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+}
+
+// 初期化
+renderMetrics();
+renderBreakdown();
+renderChart();
+renderAnalysis();
+renderAction();
+renderChat();
+renderImprove();
+renderOneon1();
+initNav();
+</script>
+</body>
+</html>
