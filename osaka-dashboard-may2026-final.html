@@ -195,6 +195,7 @@ footer { text-align: center; padding: 24px; font-size: 11px; color: #8aacac; }
     <a href="#daily">日別実績</a>
     <a href="#kpi">KPI達成状況</a>
     <a href="#challenge">課題・改善進捗</a>
+    <a href="#patient">患者管理指標</a>
     <a href="#message">院長メッセージ</a>
   </nav>
 </div>
@@ -811,7 +812,101 @@ footer { text-align: center; padding: 24px; font-size: 11px; color: #8aacac; }
     </div>
   </div>
 
-  <!-- ⑤ 院長メッセージ -->
+  <!-- ⑤ 患者管理指標 -->
+  <div class="section" id="patient">
+    <div class="section-header">
+      <div class="section-icon">📋</div>
+      <h2>患者管理指標（まどまど報告）</h2>
+      <span class="badge green">5月 過去最良</span>
+    </div>
+
+    <!-- キャンセル率 全体 -->
+    <div class="card" style="margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">🔽 全予約のキャンセル率<span style="font-size:11px;color:#666;font-weight:400;margin-left:8px;">直前48h以内＋無断（WEB・事前・医院都合は除外）</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+        <div style="background:#f5f5f5;border-radius:10px;padding:12px 8px;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">3月</div>
+          <div style="font-size:20px;font-weight:800;color:#888;">3.18%</div>
+          <div style="font-size:10px;color:#aaa;margin-top:4px;">47件／1,479件<br>無断：5件</div>
+        </div>
+        <div style="background:#fff3ec;border-radius:10px;padding:12px 8px;border:1px solid #f5cba7;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">4月</div>
+          <div style="font-size:20px;font-weight:800;color:#e07d30;">4.14%</div>
+          <div style="font-size:10px;color:#aaa;margin-top:4px;">60件／1,451件<br>無断：9件</div>
+        </div>
+        <div style="background:#e8f8f0;border-radius:10px;padding:12px 8px;border:2px solid #2e9e5a;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">5月</div>
+          <div style="font-size:22px;font-weight:800;color:#2e9e5a;">2.67%</div>
+          <div style="font-size:10px;color:#2e9e5a;margin-top:4px;">39件／1,459件<br>無断：5件</div>
+          <div style="font-size:10px;background:#2e9e5a;color:white;border-radius:6px;padding:2px 6px;margin-top:5px;font-weight:700;">✨ 集計以来最低</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 初診キャンセル率 -->
+    <div class="card" style="margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">🔽 「初診」キャンセル率</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+        <div style="background:#f5f5f5;border-radius:10px;padding:12px 8px;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">3月</div>
+          <div style="font-size:20px;font-weight:800;color:#888;">5.49%</div>
+          <div style="font-size:10px;color:#aaa;margin-top:4px;">5件／91件<br>無断：0件✨</div>
+        </div>
+        <div style="background:#fff3ec;border-radius:10px;padding:12px 8px;border:1px solid #f5cba7;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">4月</div>
+          <div style="font-size:20px;font-weight:800;color:#e07d30;">9.28%</div>
+          <div style="font-size:10px;color:#aaa;margin-top:4px;">9件／97件<br>無断：2件</div>
+        </div>
+        <div style="background:#e8f8f0;border-radius:10px;padding:12px 8px;border:2px solid #2e9e5a;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">5月</div>
+          <div style="font-size:22px;font-weight:800;color:#2e9e5a;">1.10%</div>
+          <div style="font-size:10px;color:#2e9e5a;margin-top:4px;">1件／91件<br>無断：1件</div>
+          <div style="font-size:10px;background:#2e9e5a;color:white;border-radius:6px;padding:2px 6px;margin-top:5px;font-weight:700;">🏆 直前キャンセル1件のみ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- リコール率 & LINE -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">📅 リコール率</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#888;">3月</span>
+            <span style="font-size:15px;font-weight:700;color:#888;">88.52%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#888;">4月</span>
+            <span style="font-size:15px;font-weight:700;color:#888;">88.10%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#e8f8f0;border-radius:8px;padding:6px 10px;">
+            <span style="font-size:12px;color:#2e9e5a;font-weight:600;">5月</span>
+            <span style="font-size:16px;font-weight:800;color:#2e9e5a;">88.07%</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">📲 LINE登録者数</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#888;">3月</span>
+            <span style="font-size:15px;font-weight:700;color:#888;">783人</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#888;">4月</span>
+            <span style="font-size:15px;font-weight:700;color:#888;">831人 <span style="font-size:11px;color:#e07d30;">+48</span></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#e8f8f0;border-radius:8px;padding:6px 10px;">
+            <span style="font-size:12px;color:#2e9e5a;font-weight:600;">5月</span>
+            <span style="font-size:16px;font-weight:800;color:#2e9e5a;">872人 <span style="font-size:11px;color:#2e9e5a;">+41</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ⑥ 院長メッセージ -->
   <div class="section" id="message">
     <div class="section-header">
       <div class="section-icon">💬</div>
