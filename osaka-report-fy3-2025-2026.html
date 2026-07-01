@@ -125,6 +125,16 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 .focus-num { background: #7040a0; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 .focus-text { font-size: 13px; color: #3a2a5a; line-height: 1.6; }
 .table-note { font-size: 11px; color: #6a8a8a; line-height: 1.6; background: white; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-top: 10px; }
+.timeline { position: relative; padding-left: 26px; }
+.timeline::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(#c0dede,#e6f4f4); }
+.tl-item { position: relative; background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 5px rgba(0,0,0,0.06); margin-bottom: 12px; }
+.tl-dot { position: absolute; left: -26px; top: 18px; width: 14px; height: 14px; border-radius: 50%; background: #0d6e6e; border: 3px solid #e6f4f4; box-shadow: 0 0 0 2px #0d6e6e; }
+.tl-item.featured { background: linear-gradient(135deg,#fff9ec,#fff3d8); border: 1px solid #f0d080; }
+.tl-item.featured .tl-dot { background: #e0a020; box-shadow: 0 0 0 2px #e0a020; }
+.tl-period { font-size: 11px; font-weight: 700; color: #0d6e6e; margin-bottom: 5px; letter-spacing: 0.02em; }
+.tl-item.featured .tl-period { color: #b07a10; }
+.tl-title { font-size: 14px; font-weight: 700; color: #0a4f4f; margin-bottom: 5px; }
+.tl-desc { font-size: 12.5px; color: #4a6a6a; line-height: 1.65; }
 @media (max-width: 600px) {
   .header h1 { font-size: 20px; }
   .header-stats { gap: 14px; }
@@ -139,7 +149,7 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 <div class="header">
   <div class="header-badge">🎉 開院3周年・第3期 通期実績レポート</div>
   <h1>リベ大デンタル大阪院<br>3期目 通期実績レポート</h1>
-  <div class="subtitle">第3期：2025年7月 〜 2026年6月（12ヶ月・351稼働日）</div>
+  <div class="subtitle">第3期：2025年7月 〜 2026年6月（12ヶ月・351稼働日）／ 2026年4月にべてぃお先生が院長就任</div>
   <div class="updated">作成日：2026年7月2日 ／ 出典：公式実績表・日次売上シート（検算一致）</div>
   <div class="header-stats">
     <div class="header-stat"><div class="val">¥2.74億</div><div class="lbl">第3期 売上合計</div></div>
@@ -523,14 +533,45 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 
   <!-- ハイライト -->
   <div class="section" id="highlight">
-    <div class="section-header"><div class="section-icon">⭐</div><h2>第3期のハイライト・トピックス</h2></div>
-    <div class="hl-list">
-      <div class="hl-card blue"><div class="hl-title">💰 急成長した売上水準を維持</div><div class="hl-desc">第2期に¥1.01億→¥2.82億へ急成長した売上を、第3期も¥2.74億とほぼ同水準でキープ。保険収入は3期連続で過去最高を更新し、収益基盤が着実に厚くなりました。「伸びた実績を落とさない」という、成長期の次に大切なフェーズを乗り切った1年です。</div></div>
-      <div class="hl-card"><div class="hl-title">🏥 常勤Dr（のぶ先生）退職後も売上を維持</div><div class="hl-desc">5月末にのぶ（清水）先生が退職。常勤ドクターが1名減という体制変化の中でも、6月の売上は¥2,967万を確保。1人あたりの自費単価向上でカバーし、チーム全体の底力で乗り越えました。</div></div>
-      <div class="hl-card purple"><div class="hl-title">🦷 矯正が後半に大きく飛躍</div><div class="hl-desc">1月に一度¥47万まで落ち込んだ矯正が、2月以降で急回復。3月¥956万・4月¥1,172万と大型案件が続き、年間矯正売上¥5,805万を記録。医院の大きな収益エンジンになりました。</div></div>
-      <div class="hl-card orange"><div class="hl-title">🛍️ 物販が3期連続で過去最高</div><div class="hl-desc">物販収入は1期¥189万→2期¥502万→3期¥643万と着実に成長。ハイドロソニック（電動歯ブラシ）などのセルフケア提案が定着し、5月・6月は月間過去最高を連続更新しました。</div></div>
-      <div class="hl-card"><div class="hl-title">💎 自費メンテのグレードアップ（¥16,500→¥22,000）</div><div class="hl-desc">6月、自費メンテナンスをプレミアムコースへ再設計。単なる値上げではなく、フッ素トレー法・診療記録レポートなど「価値ごとアップグレード」する方針をチーム全員で議論・決定。第4期の柱となる取り組みです。</div></div>
-      <div class="hl-card"><div class="hl-title">🌸 マーラさん、経営企画室へ（感謝を込めて）</div><div class="hl-desc">6月30日をもって、開院から3年間大阪院を支え続けてくれた歯科助手のマーラさんが、同じリベ大グループの経営企画室へ。医院の礎を一緒に築いてくれた仲間の新たな挑戦を、大阪院一同、心から応援しています。</div></div>
+    <div class="section-header"><div class="section-icon">⭐</div><h2>第3期のハイライト（年間タイムライン）</h2></div>
+    <p style="font-size:12.5px;color:#6a8a8a;margin-bottom:16px;line-height:1.6;">EMSの定着から口管強の導入、そして4月の院長交代まで — 1年を通じた主な出来事を時系列でまとめました。</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">2025年 7〜9月</div>
+        <div class="tl-title">🌬️ EMS（エアフロー自費メンテ）が定着期へ</div>
+        <div class="tl-desc">7月から月次のEMS実績報告がスタート。目標¥45万／50件を掲げ、衛生士主導で自費メンテが院内文化として根づき始めました。同時期、クラプロックス「ハイドロソニックプロ（電動歯ブラシ）」が物販の柱に育ち始めます。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">2025年 10〜12月</div>
+        <div class="tl-title">📈 EMSが4ヶ月連続で目標達成・過去最高を連発</div>
+        <div class="tl-desc">10月・11月・12月とEMS売上が過去最高を更新し続け、自費診療の安定した収益源に。矯正では「デンタルモニタリング（遠隔モニタリング）」を10月に導入し、通院負担を抑えた新しい矯正フォローを開始しました。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">2026年 1〜3月</div>
+        <div class="tl-title">🦷 口管強の導入＋ルシェロキャンペーンで土台を強化</div>
+        <div class="tl-desc">「口管強（口腔管理体制強化加算）」を届出・導入し、フッ素塗布を保険で積極算定→<b>保険売上が大きく伸長</b>。1〜3月は「ルシェロホワイト進呈キャンペーン」でホワイトニング・自費メンテを後押し。3月には矯正契約も重なり<b>久しぶりに月商3,000万円を突破</b>しました。</div>
+      </div>
+      <div class="tl-item featured">
+        <div class="tl-dot"></div>
+        <div class="tl-period">2026年 4月 ★大きな節目</div>
+        <div class="tl-title">👑 べてぃお先生が院長に就任・新体制スタート</div>
+        <div class="tl-desc">2026年4月、<b>べてぃお先生が大阪院の院長に就任</b>。あわせてgigiさん（中島）が福岡院から着任し、新しい体制での運営が始まりました。急成長した医院を引き継ぎ、「実績を落とさず、さらに良いチームへ」を掲げた第3期後半の出発点です。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">2026年 5月</div>
+        <div class="tl-title">🤝 新スタッフ加入・オペレーション改善</div>
+        <div class="tl-desc">こばさん・ありささんが加入し診療キャパが拡大。予約設計へのバッファ導入やチェアタイム管理など、現場のオペレーション改善にもチームで取り組みました。自費・物販はこの月に過去最高水準を記録。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">2026年 6月</div>
+        <div class="tl-title">💎 3周年・自費メンテのプレミアム化を決定</div>
+        <div class="tl-desc">のぶ（清水）先生の退職後も売上¥2,967万を維持。自費メンテを¥16,500→¥22,000のプレミアムコースへ「価値ごとアップグレード」する方針をチームで決定。開院3周年を迎え、マーラさんが経営企画室へと新たな一歩を踏み出しました。</div>
+      </div>
     </div>
   </div>
 
@@ -540,9 +581,9 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
     <div class="message-card">
       <div class="msg-body">
         <p>おかげさまで、大阪院は開院から丸3年を迎えることができました。第3期は売上¥2.74億。急成長した第2期（¥2.82億）の水準を、ほぼそのまま維持できた1年でした。派手な数字ではありませんが、<b>「一度伸びた実績を落とさずに走り続ける」</b>ことの難しさを思うと、これはチーム全員の大きな成果だと思っています。</p>
-        <p>年の前半は少し数字が落ち込みました。それでも下期は+44.7%と力強く回復し、第2期のピーク水準まで戻すことができました。保険収入は3期連続で過去最高、物販も過去最高。土台となる部分が、着実に厚くなっています。</p>
-        <p>期の終盤には、のぶ先生の退職、そしてマーラさんの新たな門出という節目もありました。それでも医院が売上を落とさず前に進めたのは、<b>特定の誰かに依存せず、チームとして強くなってきた</b>証だと感じています。</p>
-        <p>3年間、支えてくださった患者さん、スタッフのみんな、本当にありがとうございました。第4期は、維持から再成長へ。質を第一に、大阪の地域医療に貢献していきましょう。</p>
+        <p>私自身は、<b>2026年4月にこの大阪院の院長を引き継ぎました</b>。前任の院長やスタッフのみんなが積み上げてくれた素晴らしい土台を受け継ぎ、まず全力を注いだのは「実績を落とさないこと」でした。前半は数字が少し落ち込みましたが、下期は+44.7%と力強く回復し、第2期のピーク水準まで戻すことができました。保険収入は3期連続で過去最高、物販も過去最高と、土台は着実に厚くなっています。</p>
+        <p>この1年は、EMS（自費メンテ）の定着、口管強の導入による保険の伸長、そして院長交代やスタッフの入れ替わりと、変化の多い年でもありました。それでも医院が前に進み続けられたのは、<b>特定の誰かに依存せず、チームとして強くなってきた</b>証だと感じています。のぶ先生の退職、マーラさんの新たな門出も、みんなで支え合って乗り越えられました。</p>
+        <p>3年間、支えてくださった患者さん、そしてスタッフのみんな、本当にありがとうございました。院長を引き継いだ最初の期を「維持」で終えられた今、第4期は<b>維持から再成長へ</b>。質を第一に、大阪の地域医療に貢献していきましょう。</p>
       </div>
       <div class="msg-focus">
         <h4>🎯 第4期に向けて</h4>
