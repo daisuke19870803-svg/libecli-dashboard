@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>リベ大デンタル大阪院 | 6月確定実績ダッシュボード</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0f4f4; color: #1a2e2e; font-size: 14px; }
+
+.header {
+  background: linear-gradient(135deg, #0a4f4f 0%, #0d6e6e 55%, #1a8a8a 100%);
+  color: white;
+  padding: 28px 24px 36px;
+}
+.header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.header-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+  margin-bottom: 14px;
+}
+.header h1 { font-size: 26px; font-weight: 800; line-height: 1.25; margin-bottom: 6px; }
+.header .subtitle { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+.header .updated { font-size: 11px; opacity: 0.6; margin-top: 8px; }
+.header-stats { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+.header-stat { text-align: center; }
+.header-stat .val { font-size: 22px; font-weight: 800; }
+.header-stat .lbl { font-size: 10px; opacity: 0.7; margin-top: 2px; }
+
+.nav-wrap { position: sticky; top: 0; z-index: 100; background: white; border-bottom: 1px solid #dce8e8; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.nav { display: flex; overflow-x: auto; padding: 0 12px; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { display: block; padding: 13px 16px; font-size: 12.5px; color: #4a6a6a; text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; font-weight: 500; }
+.nav a:hover { color: #0d6e6e; border-bottom-color: #c0dede; }
+.nav a.active { color: #0d6e6e; border-bottom-color: #0d6e6e; background: #f0fafa; }
+
+.content { max-width: 920px; margin: 0 auto; padding: 24px 14px; }
+.section { margin-bottom: 32px; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 11px; border-bottom: 1px solid #ccdede; }
+.section-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; background: #e6f4f4; }
+.section-header h2 { font-size: 17px; font-weight: 700; color: #0a4f4f; }
+.section-header .badge { font-size: 11px; background: #0d6e6e; color: white; border-radius: 10px; padding: 2px 9px; margin-left: auto; font-weight: 600; }
+.section-header .badge.orange { background: #e07d30; }
+.section-header .badge.green { background: #2e9e5a; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.card { background: white; border-radius: 12px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+.card .lbl { font-size: 11px; color: #6a8a8a; font-weight: 600; margin-bottom: 6px; }
+.card .val { font-size: 24px; font-weight: 800; color: #0a4f4f; }
+.card .val.lg { font-size: 28px; }
+.card .sub { font-size: 11px; color: #8a9a9a; margin-top: 5px; }
+.card .delta { font-size: 12px; font-weight: 700; margin-top: 4px; }
+.card .delta.up { color: #2e9e5a; }
+.card .delta.dn { color: #e07d30; }
+.card .delta.neutral { color: #6a8a8a; }
+
+.compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+.compare-table th { background: #0d6e6e; color: white; padding: 9px 12px; text-align: left; font-weight: 600; }
+.compare-table td { padding: 9px 12px; border-bottom: 1px solid #eef4f4; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table .num { text-align: right; font-weight: 700; }
+.compare-table .up { color: #2e9e5a; }
+.compare-table .dn { color: #e07d30; }
+
+.rev-breakdown { margin-bottom: 14px; }
+.rev-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.rev-label { font-size: 11px; color: #6a8a8a; width: 42px; flex-shrink: 0; font-weight: 600; }
+.rev-bar-wrap { flex: 1; background: #eef4f4; border-radius: 4px; height: 20px; overflow: hidden; }
+.rev-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; }
+.rev-bar span { font-size: 10px; color: white; font-weight: 700; }
+.bar-hoken { background: linear-gradient(90deg,#3a9a9a,#5ac0c0); }
+.bar-jihi { background: linear-gradient(90deg,#2e7a5a,#42b57a); }
+.bar-kyosei { background: linear-gradient(90deg,#7040a0,#9a60d0); }
+.bar-hanpan { background: linear-gradient(90deg,#b07020,#d09040); }
+.rev-amount { font-size: 12px; font-weight: 700; color: #1a2e2e; width: 110px; flex-shrink: 0; text-align: right; }
+
+.info-box { background: #e8f8f0; border-left: 4px solid #2e9e5a; border-radius: 0 10px 10px 0; padding: 14px 16px; font-size: 13px; }
+.info-box h4 { font-weight: 700; margin-bottom: 8px; color: #1a5a3a; }
+.info-box p { line-height: 1.65; color: #2a4a3a; margin-bottom: 6px; }
+.info-box p:last-child { margin-bottom: 0; }
+.info-box.orange { background: #fff3e8; border-color: #e07d30; }
+.info-box.orange h4 { color: #7a3a10; }
+.info-box.orange p { color: #5a3010; }
+.info-box.blue { background: #e8f0ff; border-color: #4060d0; }
+.info-box.blue h4 { color: #2040a0; }
+.info-box.blue p { color: #303060; }
+
+.daily-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 680px; }
+.daily-table th { background: #0a4f4f; color: white; padding: 8px 6px; text-align: center; font-weight: 600; font-size: 11px; position: sticky; top: 44px; }
+.daily-table td { padding: 7px 6px; text-align: right; border-bottom: 1px solid #eef4f4; }
+.daily-table td:first-child { text-align: center; font-weight: 600; }
+.daily-table .row-high { background: #f0fff6; }
+.daily-table .row-weekend { background: #f7fcf7; }
+.daily-table .row-holiday { background: #f5f5f5; color: #aaa; }
+.daily-table .tag { display: inline-block; font-size: 9px; border-radius: 4px; padding: 1px 5px; font-weight: 700; }
+.daily-table .tag.high { background: #d0f0e0; color: #1a6a3a; }
+.daily-table .tag.mid { background: #fff0d0; color: #8a5010; }
+.daily-table .tag.low { background: #f0f0f0; color: #6a6a6a; }
+.daily-table .rate { font-size: 11px; }
+.daily-table .total-row { background: #0a4f4f; color: white; font-weight: 700; }
+.daily-table .total-row td { border-bottom: none; color: white; }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.kpi-card { background: white; border-radius: 12px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+.kpi-label { font-size: 12px; color: #6a8a8a; font-weight: 600; margin-bottom: 6px; }
+.kpi-current { font-size: 22px; font-weight: 800; color: #0a4f4f; margin-bottom: 4px; }
+.kpi-target { font-size: 11px; color: #8a9a9a; margin-bottom: 8px; }
+.kpi-bar { height: 6px; background: #eef4f4; border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+.kpi-fill { height: 100%; border-radius: 3px; }
+.kpi-fill.green { background: linear-gradient(90deg,#2e9e5a,#42d07a); }
+.kpi-fill.orange { background: linear-gradient(90deg,#e07d30,#f0b050); }
+.kpi-fill.purple { background: linear-gradient(90deg,#7040a0,#9a60d0); }
+.kpi-fill.blue { background: linear-gradient(90deg,#2060c0,#4090e0); }
+.kpi-status { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; }
+.kpi-status.great { background: #d0f0e0; color: #1a6a3a; }
+.kpi-status.ok { background: #e8f4f8; color: #1a4a6a; }
+.kpi-status.watch { background: #fff0d0; color: #8a5010; }
+
+.challenge-list { display: flex; flex-direction: column; gap: 10px; }
+.challenge-card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 5px rgba(0,0,0,0.06); border-left: 4px solid #ccc; }
+.challenge-card.done { border-left-color: #2e9e5a; }
+.challenge-card.doing { border-left-color: #e07d30; }
+.challenge-card.new { border-left-color: #4060d0; }
+.ch-status { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
+.challenge-card.done .ch-status { color: #2e9e5a; }
+.challenge-card.doing .ch-status { color: #e07d30; }
+.challenge-card.new .ch-status { color: #4060d0; }
+.ch-title { font-size: 14px; font-weight: 700; color: #0a4f4f; margin-bottom: 5px; }
+.ch-desc { font-size: 12px; color: #4a6a6a; line-height: 1.6; }
+
+.message-card { background: white; border-radius: 14px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+.msg-good { background: #e8f8f0; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.msg-good h4 { font-weight: 700; color: #1a5a3a; margin-bottom: 10px; font-size: 14px; }
+.msg-good ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.msg-good ul li { font-size: 13px; color: #2a4a3a; line-height: 1.5; display: flex; gap: 8px; }
+.msg-good ul li span { flex-shrink: 0; }
+.msg-body { font-size: 13.5px; line-height: 1.8; color: #2a3a3a; margin-bottom: 16px; }
+.msg-body p { margin-bottom: 10px; }
+.msg-focus { background: #f8f4ff; border-radius: 10px; padding: 16px; }
+.msg-focus h4 { font-weight: 700; color: #5030a0; margin-bottom: 12px; font-size: 14px; }
+.msg-focus-item { display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start; }
+.msg-focus-item:last-child { margin-bottom: 0; }
+.focus-num { background: #7040a0; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.focus-text { font-size: 13px; color: #3a2a5a; line-height: 1.6; }
+
+.table-note { font-size: 11px; color: #6a8a8a; line-height: 1.6; background: white; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-top: 10px; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 20px; }
+  .header-stats { gap: 12px; }
+  .header-stat .val { font-size: 18px; }
+  .content { padding: 16px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="header-badge">📊 確定実績レポート</div>
+      <h1>リベ大デンタル大阪院<br>6月 確定実績ダッシュボード</h1>
+      <div class="subtitle">2026年6月1日（月）〜 6月30日（火）｜29稼働日（6/14のみ休診）</div>
+      <div class="updated">作成日：2026年7月1日</div>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="header-stat">
+      <div class="val">¥2,967万</div>
+      <div class="lbl">月間売上合計</div>
+    </div>
+    <div class="header-stat">
+      <div class="val">29日</div>
+      <div class="lbl">稼働日数</div>
+    </div>
+    <div class="header-stat">
+      <div class="val">40人/日</div>
+      <div class="lbl">平均患者数</div>
+    </div>
+    <div class="header-stat">
+      <div class="val">57.1%</div>
+      <div class="lbl">非保険率</div>
+    </div>
+    <div class="header-stat">
+      <div class="val">104%</div>
+      <div class="lbl">月間目標達成率</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="#summary" class="active">6月実績サマリー</a>
+    <a href="#daily">日別実績</a>
+    <a href="#kpi">KPI達成状況</a>
+    <a href="#challenge">課題・改善進捗</a>
+    <a href="#patient">患者管理指標</a>
+    <a href="#message">院長メッセージ</a>
+  </nav>
+</div>
+
+<div class="content">
+
+  <!-- ① 6月実績サマリー -->
+  <div class="section" id="summary">
+    <div class="section-header">
+      <div class="section-icon">📈</div>
+      <h2>6月確定実績サマリー</h2>
+      <span class="badge green">確定値</span>
+    </div>
+
+    <div class="cards" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="lbl">月間売上合計</div>
+        <div class="val lg">¥2,967万</div>
+        <div class="sub">5月実績 ¥3,122万</div>
+        <div class="delta up">▲ 目標¥2,850万の104%達成</div>
+      </div>
+      <div class="card">
+        <div class="lbl">自費診療売上</div>
+        <div class="val">¥1,061万</div>
+        <div class="sub">5月 ¥1,027万 → <b>+3.4%</b></div>
+        <div class="delta up">▲▲ 過去最高を更新！</div>
+      </div>
+      <div class="card">
+        <div class="lbl">1日平均患者数</div>
+        <div class="val">40人</div>
+        <div class="sub">月間総来院 1,170人（29日稼働）</div>
+        <div class="delta neutral">→ 常勤Dr体制変化の中で維持</div>
+      </div>
+      <div class="card">
+        <div class="lbl">物販売上</div>
+        <div class="val">¥114万</div>
+        <div class="sub">目標¥60万の <b>190%達成</b></div>
+        <div class="delta up">▲▲ 5月¥112万をさらに更新！</div>
+      </div>
+    </div>
+
+    <!-- 前月比較テーブル -->
+    <div style="overflow-x:auto; margin-bottom:16px;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th class="num">5月実績</th>
+            <th class="num">6月実績</th>
+            <th class="num">前月比</th>
+            <th class="num">6月目標</th>
+            <th class="num">目標比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>月間売上（合計）</td><td class="num">¥31,220,820</td><td class="num">¥29,671,420</td><td class="num dn">−4.8%</td><td class="num">¥28,500,000</td><td class="num up">104.1%</td></tr>
+          <tr><td>　保険診療</td><td class="num">¥12,747,930</td><td class="num">¥11,545,920</td><td class="num dn">−9.4%</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>　自費診療</td><td class="num">¥10,265,150</td><td class="num">¥10,612,100</td><td class="num up">+3.4%</td><td class="num">—</td><td class="num up">過去最高</td></tr>
+          <tr><td>　矯正</td><td class="num">¥7,088,400</td><td class="num">¥6,342,300</td><td class="num dn">−10.5%</td><td class="num">¥6,500,000</td><td class="num dn">97.6%</td></tr>
+          <tr><td>　物販</td><td class="num">¥1,119,340</td><td class="num">¥1,137,770</td><td class="num up">+1.6%</td><td class="num">¥600,000</td><td class="num up">190%</td></tr>
+          <tr><td>非保険率（自費+矯正）</td><td class="num">55.6%</td><td class="num">57.1%</td><td class="num up">+1.5pt</td><td class="num">60%</td><td class="num dn">−2.9pt</td></tr>
+          <tr><td>平均患者数/日</td><td class="num">43人</td><td class="num">40人</td><td class="num dn">−3人</td><td class="num">45人</td><td class="num dn">89%</td></tr>
+          <tr><td>稼働日数</td><td class="num">31日</td><td class="num">29日</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 売上内訳バーチャート -->
+    <div class="card rev-breakdown">
+      <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">6月売上内訳（¥29,671,420）</div>
+      <div class="rev-row">
+        <div class="rev-label">保険</div>
+        <div class="rev-bar-wrap">
+          <div class="rev-bar bar-hoken" style="width:38.9%"><span>38.9%</span></div>
+        </div>
+        <div class="rev-amount">¥1,155万 (38.9%)</div>
+      </div>
+      <div class="rev-row">
+        <div class="rev-label">自費</div>
+        <div class="rev-bar-wrap">
+          <div class="rev-bar bar-jihi" style="width:35.8%"><span>35.8%</span></div>
+        </div>
+        <div class="rev-amount">¥1,061万 (35.8%)</div>
+      </div>
+      <div class="rev-row">
+        <div class="rev-label">矯正</div>
+        <div class="rev-bar-wrap">
+          <div class="rev-bar bar-kyosei" style="width:21.4%"><span>21.4%</span></div>
+        </div>
+        <div class="rev-amount">¥634万 (21.4%)</div>
+      </div>
+      <div class="rev-row">
+        <div class="rev-label">物販</div>
+        <div class="rev-bar-wrap">
+          <div class="rev-bar bar-hanpan" style="width:3.8%"><span></span></div>
+        </div>
+        <div class="rev-amount">¥114万 (3.8%)</div>
+      </div>
+    </div>
+
+    <div class="info-box green" style="margin-top:14px;">
+      <h4>📌 6月のポイント：常勤Dr体制変化の中でも目標104%達成。自費は過去最高を更新！</h4>
+      <p>高橋先生の最終出勤（6/21）後も、チームの底力で月間¥2,967万・目標104%を達成。特に<b>自費診療¥1,061万は5月¥1,027万を超えて過去最高を再更新</b>。常勤Dr変化により患者数は40人/日となりましたが、<b>1人あたりの自費単価が大幅に向上</b>しており、質の高い診療が数字に表れています。物販¥114万も3ヶ月連続で過去最高を更新。矯正も目標¥650万に対し¥634万（97.6%）と健闘しました。</p>
+    </div>
+  </div>
+
+  <!-- ② 日別実績 -->
+  <div class="section" id="daily">
+    <div class="section-header">
+      <div class="section-icon">📅</div>
+      <h2>日別実績（6月全30日）</h2>
+      <span class="badge green">確定値</span>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="daily-table">
+        <thead>
+          <tr>
+            <th>日付</th>
+            <th>売上</th>
+            <th>患者数</th>
+            <th>保険</th>
+            <th>自費</th>
+            <th>矯正</th>
+            <th>物販</th>
+            <th>非保険率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="">
+            <td>6/1(月)</td>
+            <td>818,730</td><td>42人</td><td>405,680</td><td>352,000</td><td>0</td><td>61,050</td>
+            <td class="rate"><span class="tag mid">43%</span></td>
+          </tr>
+          <tr class="">
+            <td>6/2(火)</td>
+            <td>503,500</td><td>25人</td><td>294,000</td><td>144,100</td><td>0</td><td>65,400</td>
+            <td class="rate"><span class="tag low">29%</span></td>
+          </tr>
+          <tr class="row-high">
+            <td>6/3(水)</td>
+            <td><b>2,255,850</b></td><td>36人</td><td>205,010</td><td>5,500</td><td><b>1,980,000</b></td><td>65,340</td>
+            <td class="rate"><span class="tag high">88%</span><br><span style="font-size:10px;color:#7040a0;">矯正超大型</span></td>
+          </tr>
+          <tr class="row-high">
+            <td>6/4(木)</td>
+            <td><b>1,736,190</b></td><td>39人</td><td>424,030</td><td><b>1,239,550</b></td><td>0</td><td>72,610</td>
+            <td class="rate"><span class="tag high">71%</span><br><span style="font-size:10px;color:#2e9e5a;">自費大型</span></td>
+          </tr>
+          <tr class="">
+            <td>6/5(金)</td>
+            <td>461,160</td><td>26人</td><td>288,520</td><td>154,000</td><td>0</td><td>18,640</td>
+            <td class="rate"><span class="tag mid">33%</span></td>
+          </tr>
+          <tr class="row-weekend row-high">
+            <td>6/6(土)</td>
+            <td>963,970</td><td>37人</td><td>399,450</td><td>552,600</td><td>0</td><td>11,920</td>
+            <td class="rate"><span class="tag high">57%</span><br><span style="font-size:10px;color:#2e9e5a;">自費好調</span></td>
+          </tr>
+          <tr class="row-weekend">
+            <td>6/7(日)</td>
+            <td>387,760</td><td>29人</td><td>268,080</td><td>47,850</td><td>55,000</td><td>16,830</td>
+            <td class="rate"><span class="tag low">27%</span></td>
+          </tr>
+          <tr class="">
+            <td>6/8(月)</td>
+            <td>785,100</td><td>49人</td><td>542,760</td><td>223,300</td><td>0</td><td>19,040</td>
+            <td class="rate"><span class="tag low">28%</span></td>
+          </tr>
+          <tr class="">
+            <td>6/9(火)</td>
+            <td>848,350</td><td>43人</td><td>444,580</td><td>357,500</td><td>0</td><td>46,270</td>
+            <td class="rate"><span class="tag mid">42%</span></td>
+          </tr>
+          <tr class="row-high">
+            <td>6/10(水)</td>
+            <td>835,950</td><td>45人</td><td>356,510</td><td>286,000</td><td>178,100</td><td>15,340</td>
+            <td class="rate"><span class="tag high">55%</span></td>
+          </tr>
+          <tr class="row-high">
+            <td>6/11(木)</td>
+            <td><b>2,190,760</b></td><td>47人</td><td>425,010</td><td><b>1,721,500</b></td><td>0</td><td>44,250</td>
+            <td class="rate"><span class="tag high">79%</span><br><span style="font-size:10px;color:#2e9e5a;">自費最高日</span></td>
+          </tr>
+          <tr class="">
+            <td>6/12(金)</td>
+            <td>550,540</td><td>42人</td><td>428,660</td><td>105,050</td><td>0</td><td>16,830</td>
+            <td class="rate"><span class="tag low">19%</span></td>
+          </tr>
+          <tr class="row-weekend row-high">
+            <td>6/13(土)</td>
+            <td><b>1,909,420</b></td><td><b>60人</b></td><td>484,320</td><td>159,500</td><td><b>1,199,000</b></td><td>66,600</td>
+            <td class="rate"><span class="tag high">71%</span><br><span style="font-size:10px;color:#7040a0;">矯正大型</span></td>
+          </tr>
+          <tr class="row-holiday">
+            <td>6/14(日)</td>
+            <td colspan="7" style="text-align:center;color:#aaa;">休診</td>
+          </tr>
+          <tr class="row-high">
+            <td>6/15(月)</td>
+            <td><b>1,838,650</b></td><td>40人</td><td>393,090</td><td><b>1,384,900</b></td><td>0</td><td>60,660</td>
+            <td class="rate"><span class="tag high">75%</span><br><span style="font-size:10px;color:#2e9e5a;">自費大型</span></td>
+          </tr>
+          <tr class="">
+            <td>6/16(火)</td>
+            <td>663,660</td><td>44人</td><td>509,500</td><td>99,000</td><td>0</td><td>55,160</td>
+            <td class="rate"><span class="tag low">15%</span></td>
+          </tr>
+          <tr class="row-high">
+            <td>6/17(水)</td>
+            <td><b>1,639,630</b></td><td>39人</td><td>240,730</td><td>22,000</td><td><b>1,339,700</b></td><td>37,200</td>
+            <td class="rate"><span class="tag high">83%</span><br><span style="font-size:10px;color:#7040a0;">矯正大型</span></td>
+          </tr>
+          <tr class="">
+            <td>6/18(木)</td>
+            <td>624,940</td><td>40人</td><td>371,360</td><td>223,300</td><td>0</td><td>30,280</td>
+            <td class="rate"><span class="tag mid">36%</span></td>
+          </tr>
+          <tr class="">
+            <td>6/19(金)</td>
+            <td>722,520</td><td>38人</td><td>396,840</td><td>294,800</td><td>0</td><td>30,880</td>
+            <td class="rate"><span class="tag mid">41%</span></td>
+          </tr>
+          <tr class="row-weekend">
+            <td>6/20(土)</td>
+            <td>787,460</td><td><b>55人</b></td><td>589,510</td><td>120,300</td><td>0</td><td>77,650</td>
+            <td class="rate"><span class="tag low">15%</span><br><span style="font-size:10px;color:#2e9e5a;">月間最多患者</span></td>
+          </tr>
+          <tr class="row-weekend row-high">
+            <td>6/21(日)</td>
+            <td><b>1,223,700</b></td><td>26人</td><td>294,290</td><td>889,800</td><td>0</td><td>39,610</td>
+            <td class="rate"><span class="tag high">73%</span><br><span style="font-size:10px;color:#2e9e5a;">自費大型</span></td>
+          </tr>
+          <tr class="">
+            <td>6/22(月)</td>
+            <td>597,590</td><td>43人</td><td>458,920</td><td>128,000</td><td>0</td><td>10,670</td>
+            <td class="rate"><span class="tag low">21%</span></td>
+          </tr>
+          <tr class="">
+            <td>6/23(火)</td>
+            <td>770,420</td><td>33人</td><td>371,050</td><td>385,000</td><td>0</td><td>14,370</td>
+            <td class="rate"><span class="tag mid">50%</span></td>
+          </tr>
+          <tr class="">
+            <td>6/24(水)</td>
+            <td>593,170</td><td>40人</td><td>388,330</td><td>149,050</td><td>0</td><td>55,790</td>
+            <td class="rate"><span class="tag low">25%</span></td>
+          </tr>
+          <tr class="row-high">
+            <td>6/25(木)</td>
+            <td>1,117,150</td><td>42人</td><td>402,950</td><td>707,300</td><td>0</td><td>6,900</td>
+            <td class="rate"><span class="tag high">63%</span><br><span style="font-size:10px;color:#2e9e5a;">自費好調</span></td>
+          </tr>
+          <tr class="row-weekend row-high">
+            <td>6/26(金)</td>
+            <td><b>2,076,130</b></td><td>45人</td><td>300,240</td><td>176,550</td><td><b>1,590,500</b></td><td>8,840</td>
+            <td class="rate"><span class="tag high">85%</span><br><span style="font-size:10px;color:#7040a0;">矯正超大型</span></td>
+          </tr>
+          <tr class="row-weekend">
+            <td>6/27(土)</td>
+            <td>759,460</td><td>50人</td><td>600,190</td><td>55,550</td><td>0</td><td>103,720</td>
+            <td class="rate"><span class="tag low">7%</span><br><span style="font-size:10px;color:#e07d30;">物販好調</span></td>
+          </tr>
+          <tr class="row-weekend">
+            <td>6/28(日)</td>
+            <td>347,510</td><td>27人</td><td>288,830</td><td>52,800</td><td>0</td><td>5,880</td>
+            <td class="rate"><span class="tag low">15%</span></td>
+          </tr>
+          <tr class="">
+            <td>6/29(月)</td>
+            <td>965,650</td><td>44人</td><td>453,710</td><td>498,300</td><td>0</td><td>13,640</td>
+            <td class="rate"><span class="tag mid">52%</span></td>
+          </tr>
+          <tr class="">
+            <td>6/30(火)</td>
+            <td>663,170</td><td>44人</td><td>519,770</td><td>77,000</td><td>0</td><td>66,400</td>
+            <td class="rate"><span class="tag low">12%</span></td>
+          </tr>
+          <tr class="total-row">
+            <td>合計</td>
+            <td>29,671,420</td><td>1,170人</td>
+            <td>11,545,920</td><td>10,612,100</td><td>6,342,300</td><td>1,137,770</td>
+            <td>57.1%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-note">
+      <p>紫背景は矯正大型案件日。緑背景は自費好調日。土日は薄緑背景。6/14（日）は休診。非保険率＝（自費+矯正）÷合計。</p>
+      <p>最多患者数：<b>6/13（土）60人</b>／最高日商：<b>6/3（水）¥226万</b>（矯正超大型）／最高自費日：<b>6/11（木）¥172万</b></p>
+    </div>
+  </div>
+
+  <!-- ③ KPI達成状況 -->
+  <div class="section" id="kpi">
+    <div class="section-header">
+      <div class="section-icon">🎯</div>
+      <h2>KPI達成状況（6月）</h2>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">💰 月間売上目標（合計）</div>
+        <div class="kpi-current">¥2,967万 <span style="font-size:13px;color:#2e9e5a;">104%</span></div>
+        <div class="kpi-target">目標 ¥2,850万 ／ +¥117万の超過達成</div>
+        <div class="kpi-bar"><div class="kpi-fill green" style="width:100%;"></div></div>
+        <span class="kpi-status great">✅ 達成</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">🦷 矯正売上</div>
+        <div class="kpi-current">¥634万 <span style="font-size:13px;color:#e07d30;">97.6%</span></div>
+        <div class="kpi-target">目標 ¥650万 ／ 6/3・6/13・6/17・6/26に大型案件</div>
+        <div class="kpi-bar"><div class="kpi-fill orange" style="width:97.6%;"></div></div>
+        <span class="kpi-status watch">⚠️ 目標まであと¥16万</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">🏥 矯正以外（保険+自費+物販）</div>
+        <div class="kpi-current">¥2,333万 <span style="font-size:13px;color:#2e9e5a;">106%</span></div>
+        <div class="kpi-target">目標 ¥2,200万 ／ 2ヶ月連続達成！</div>
+        <div class="kpi-bar"><div class="kpi-fill green" style="width:100%;"></div></div>
+        <span class="kpi-status great">✅ 達成（2ヶ月連続）</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">📈 月間非保険率（自費+矯正）</div>
+        <div class="kpi-current">57.1% <span style="font-size:13px;color:#e07d30;">95%</span></div>
+        <div class="kpi-target">目標 60%以上 ／ 5月55.6%から改善傾向</div>
+        <div class="kpi-bar"><div class="kpi-fill orange" style="width:95.2%;"></div></div>
+        <span class="kpi-status watch">⚠️ 目標まであと2.9pt（改善中）</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">👥 1日平均患者数</div>
+        <div class="kpi-current">40人 <span style="font-size:13px;color:#e07d30;">89%</span></div>
+        <div class="kpi-target">目標 45人 ／ 常勤Dr体制変化に伴い変動</div>
+        <div class="kpi-bar"><div class="kpi-fill orange" style="width:88.9%;"></div></div>
+        <span class="kpi-status watch">⚠️ 体制整備と予約充填で改善へ</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">💉 自費診療売上</div>
+        <div class="kpi-current">¥1,061万</div>
+        <div class="kpi-target">5月¥1,027万からさらに+3.4%！過去最高更新</div>
+        <div class="kpi-bar"><div class="kpi-fill blue" style="width:100%;"></div></div>
+        <span class="kpi-status great">✅✅ 過去最高・3ヶ月連続上昇</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">🛍️ 物販売上</div>
+        <div class="kpi-current">¥114万 <span style="font-size:13px;color:#2e9e5a;">190%</span></div>
+        <div class="kpi-target">目標 ¥60万 ／ 5月¥112万からさらに更新</div>
+        <div class="kpi-bar"><div class="kpi-fill green" style="width:100%;"></div></div>
+        <span class="kpi-status great">✅✅ 3ヶ月連続過去最高</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 課題と改善アクション -->
+  <div class="section" id="challenge">
+    <div class="section-header">
+      <div class="section-icon">🔧</div>
+      <h2>課題と改善アクション（6月進捗）</h2>
+    </div>
+
+    <div class="challenge-list">
+      <div class="challenge-card done">
+        <div class="ch-status">✅ 継続達成</div>
+        <div class="ch-title">矯正以外の売上強化</div>
+        <div class="ch-desc">矯正以外¥2,333万（目標¥2,200万の106%）を2ヶ月連続達成。自費¥1,061万は過去最高を更新。自費提案力がチーム全体に定着してきた証です。</div>
+      </div>
+      <div class="challenge-card done">
+        <div class="ch-status">✅ 新戦略始動</div>
+        <div class="ch-title">自費メンテのプレミアム化（¥16,500→¥22,000）</div>
+        <div class="ch-desc">6/19にチームへ提案・議論し、6/25の定例MTGで方向性を決定。「価格だけ上げるのではなく、価値ごとアップグレード」の方針でプレミアムコースとして展開へ。フッ素トレー法・診療記録レポートなど内容も具体化中。</div>
+      </div>
+      <div class="challenge-card doing">
+        <div class="ch-status">🔄 最優先取り組み</div>
+        <div class="ch-title">常勤Dr体制変化への対応と患者数の回復</div>
+        <div class="ch-desc">高橋先生が6/21に最終出勤。6月後半から新体制で稼働。患者数は40人/日（目標45人）となったが、1人あたり自費単価の向上で売上は目標を維持。今後は新体制に合わせた予約充填率の向上と新患獲得が重要テーマ。</div>
+      </div>
+      <div class="challenge-card doing">
+        <div class="ch-status">🔄 継続取り組み</div>
+        <div class="ch-title">非保険率60%の安定達成</div>
+        <div class="ch-desc">6月57.1%（5月55.6%から改善）。自費¥1,061万の基盤を活かし、自費提案のさらなる底上げで7月の60%達成を目指します。患者数が落ちても非保険率が上がっていることは、質の向上の証です。</div>
+      </div>
+      <div class="challenge-card doing">
+        <div class="ch-status">🔄 継続取り組み</div>
+        <div class="ch-title">矯正売上の目標達成（¥650万）</div>
+        <div class="ch-desc">6月¥634万（97.6%）とわずかに未達。大型案件は4件（6/3・6/13・6/17・6/26）と安定的に発生。コンサルから矯正開始への転換率を高めることで7月の達成を目指します。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 患者管理指標 -->
+  <div class="section" id="patient">
+    <div class="section-header">
+      <div class="section-icon">📋</div>
+      <h2>患者管理指標（まどまど報告 5月実績）</h2>
+      <span class="badge green">5月 過去最良</span>
+    </div>
+
+    <div class="card" style="margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">🔽 全予約のキャンセル率<span style="font-size:11px;color:#666;font-weight:400;margin-left:8px;">直前48h以内＋無断（WEB・事前・医院都合は除外）</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+        <div style="background:#f5f5f5;border-radius:10px;padding:12px 8px;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">3月</div>
+          <div style="font-size:20px;font-weight:800;color:#888;">3.18%</div>
+          <div style="font-size:10px;color:#aaa;margin-top:4px;">47件／1,479件<br>無断：5件</div>
+        </div>
+        <div style="background:#fff3ec;border-radius:10px;padding:12px 8px;border:1px solid #f5cba7;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">4月</div>
+          <div style="font-size:20px;font-weight:800;color:#e07d30;">4.14%</div>
+          <div style="font-size:10px;color:#aaa;margin-top:4px;">60件／1,451件<br>無断：9件</div>
+        </div>
+        <div style="background:#e8f8f0;border-radius:10px;padding:12px 8px;border:2px solid #2e9e5a;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">5月</div>
+          <div style="font-size:22px;font-weight:800;color:#2e9e5a;">2.67%</div>
+          <div style="font-size:10px;color:#2e9e5a;margin-top:4px;">39件／1,459件<br>無断：5件</div>
+          <div style="font-size:10px;background:#2e9e5a;color:white;border-radius:6px;padding:2px 6px;margin-top:5px;font-weight:700;">✨ 集計以来最低</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">🔽 「初診」キャンセル率</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+        <div style="background:#f5f5f5;border-radius:10px;padding:12px 8px;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">3月</div>
+          <div style="font-size:20px;font-weight:800;color:#888;">5.49%</div>
+          <div style="font-size:10px;color:#aaa;margin-top:4px;">5件／91件<br>無断：0件✨</div>
+        </div>
+        <div style="background:#fff3ec;border-radius:10px;padding:12px 8px;border:1px solid #f5cba7;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">4月</div>
+          <div style="font-size:20px;font-weight:800;color:#e07d30;">9.28%</div>
+          <div style="font-size:10px;color:#aaa;margin-top:4px;">9件／97件<br>無断：2件</div>
+        </div>
+        <div style="background:#e8f8f0;border-radius:10px;padding:12px 8px;border:2px solid #2e9e5a;">
+          <div style="font-size:11px;color:#888;margin-bottom:4px;">5月</div>
+          <div style="font-size:22px;font-weight:800;color:#2e9e5a;">1.10%</div>
+          <div style="font-size:10px;color:#2e9e5a;margin-top:4px;">1件／91件<br>無断：1件</div>
+          <div style="font-size:10px;background:#2e9e5a;color:white;border-radius:6px;padding:2px 6px;margin-top:5px;font-weight:700;">🏆 直前キャンセル1件のみ</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">📅 リコール率</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#888;">3月</span>
+            <span style="font-size:15px;font-weight:700;color:#888;">88.52%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#888;">4月</span>
+            <span style="font-size:15px;font-weight:700;color:#888;">88.10%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#e8f8f0;border-radius:8px;padding:6px 10px;">
+            <span style="font-size:12px;color:#2e9e5a;font-weight:600;">5月</span>
+            <span style="font-size:16px;font-weight:800;color:#2e9e5a;">88.07%</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">📲 LINE登録者数</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#888;">3月</span>
+            <span style="font-size:15px;font-weight:700;color:#888;">783人</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#888;">4月</span>
+            <span style="font-size:15px;font-weight:700;color:#888;">831人 <span style="font-size:11px;color:#e07d30;">+48</span></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#e8f8f0;border-radius:8px;padding:6px 10px;">
+            <span style="font-size:12px;color:#2e9e5a;font-weight:600;">5月</span>
+            <span style="font-size:16px;font-weight:800;color:#2e9e5a;">872人 <span style="font-size:11px;color:#2e9e5a;">+41</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ 院長メッセージ -->
+  <div class="section" id="message">
+    <div class="section-header">
+      <div class="section-icon">💬</div>
+      <h2>院長メッセージ</h2>
+    </div>
+
+    <div class="message-card">
+
+      <div class="msg-good">
+        <h4>🎉 6月の成果・良かったこと</h4>
+        <ul>
+          <li><span>💰</span>月間¥2,967万で目標104%達成。常勤Drの体制変化という大きな変化の中でも、チームの力で目標をクリアしました。</li>
+          <li><span>💉</span>自費診療¥1,061万で過去最高を更新（5月¥1,027万→+3.4%）。3ヶ月連続で伸び続けています。</li>
+          <li><span>🛍️</span>物販¥114万で3ヶ月連続過去最高更新。スタッフ全員の提案力が確実に磨かれています。</li>
+          <li><span>⭐</span>自費メンテプレミアム化（¥16,500→¥22,000）をチームで議論・決定。みんなで考えた方向性です。</li>
+        </ul>
+      </div>
+
+      <div class="msg-body">
+        <p>6月は、高橋先生が最終出勤を迎えるという大きな節目の月でした。患者数は40人/日となりましたが、<b>自費¥1,061万という過去最高を記録し、月間売上は目標104%を達成</b>できました。これはチーム全員が踏ん張ってくれた結果です。本当にありがとうございました。</p>
+        <p>今月特に嬉しかったのは、患者数が減っても<b>1人ひとりへの診療の質が上がり、自費単価が上昇していること</b>です。量で補うのではなく、質で応えられるチームになってきた証だと思います。自費メンテのプレミアム化もその延長線上にあります。</p>
+        <p>7月は新体制でのスタートになります。患者数の回復を焦らず、まず<b>今いる患者さんへ最高の診療を届けること</b>を最優先に。その積み重ねが口コミや再来院につながります。引き続きチーム一丸で取り組んでいきましょう。</p>
+      </div>
+
+      <div class="msg-focus">
+        <h4>🎯 7月の重点取り組み</h4>
+        <div class="msg-focus-item">
+          <div class="focus-num">1</div>
+          <div class="focus-text"><b>新体制での診療品質の維持・向上</b>　── 患者数の回復を焦らず、まず質を高め、口コミ・リコール・紹介につながる診療体験を届けます</div>
+        </div>
+        <div class="msg-focus-item">
+          <div class="focus-num">2</div>
+          <div class="focus-text"><b>自費メンテプレミアム化の実装</b>　── 6/25 MTGで決定した方向性を具体化。¥22,000の価値をしっかり患者さんに届けられる準備を整えます</div>
+        </div>
+        <div class="msg-focus-item">
+          <div class="focus-num">3</div>
+          <div class="focus-text"><b>非保険率60%・矯正¥650万の同時達成</b>　── 自費¥1,061万の勢いを維持しつつ、矯正コンサルの転換率向上で全KPI達成を目指します</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+const navLinks = document.querySelectorAll('.nav a');
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`.nav a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
