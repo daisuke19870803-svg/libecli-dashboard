@@ -7,35 +7,21 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0f4f4; color: #1a2e2e; font-size: 14px; }
-
-.header {
-  background: linear-gradient(135deg, #073a3a 0%, #0d6e6e 50%, #1a8a8a 100%);
-  color: white; padding: 30px 24px 38px; position: relative; overflow: hidden;
-}
-.header::after {
-  content: "3"; position: absolute; right: -10px; top: -30px; font-size: 200px;
-  font-weight: 900; opacity: 0.07; line-height: 1;
-}
-.header-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(255,215,120,0.22); border: 1px solid rgba(255,215,120,0.6);
-  border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 700;
-  letter-spacing: 0.04em; margin-bottom: 14px; color: #ffe8a0;
-}
+.header { background: linear-gradient(135deg, #073a3a 0%, #0d6e6e 50%, #1a8a8a 100%); color: white; padding: 30px 24px 38px; position: relative; overflow: hidden; }
+.header::after { content: "3"; position: absolute; right: -10px; top: -30px; font-size: 200px; font-weight: 900; opacity: 0.07; line-height: 1; }
+.header-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,215,120,0.22); border: 1px solid rgba(255,215,120,0.6); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 14px; color: #ffe8a0; }
 .header h1 { font-size: 27px; font-weight: 800; line-height: 1.25; margin-bottom: 6px; }
 .header .subtitle { font-size: 13px; opacity: 0.9; margin-top: 6px; }
 .header .updated { font-size: 11px; opacity: 0.6; margin-top: 8px; }
 .header-stats { display: flex; gap: 22px; margin-top: 22px; flex-wrap: wrap; position: relative; z-index: 2; }
 .header-stat .val { font-size: 24px; font-weight: 800; }
 .header-stat .lbl { font-size: 10px; opacity: 0.75; margin-top: 2px; }
-
 .nav-wrap { position: sticky; top: 0; z-index: 100; background: white; border-bottom: 1px solid #dce8e8; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 .nav { display: flex; overflow-x: auto; padding: 0 12px; scrollbar-width: none; max-width: 960px; margin: 0 auto; }
 .nav::-webkit-scrollbar { display: none; }
 .nav a { display: block; padding: 13px 16px; font-size: 12.5px; color: #4a6a6a; text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; font-weight: 500; }
 .nav a:hover { color: #0d6e6e; border-bottom-color: #c0dede; }
 .nav a.active { color: #0d6e6e; border-bottom-color: #0d6e6e; background: #f0fafa; }
-
 .content { max-width: 960px; margin: 0 auto; padding: 24px 14px; }
 .section { margin-bottom: 34px; }
 .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 11px; border-bottom: 1px solid #ccdede; }
@@ -43,7 +29,6 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 .section-header h2 { font-size: 17px; font-weight: 700; color: #0a4f4f; }
 .section-header .badge { font-size: 11px; background: #0d6e6e; color: white; border-radius: 10px; padding: 2px 9px; margin-left: auto; font-weight: 600; }
 .section-header .badge.green { background: #2e9e5a; }
-
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
 .card { background: white; border-radius: 12px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
 .card .lbl { font-size: 11px; color: #6a8a8a; font-weight: 600; margin-bottom: 6px; }
@@ -53,8 +38,6 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 .card .delta { font-size: 12px; font-weight: 700; margin-top: 4px; }
 .card .delta.up { color: #2e9e5a; }
 .card .delta.neutral { color: #6a8a8a; }
-
-/* 月次バーチャート */
 .mchart-wrap { background: white; border-radius: 12px; padding: 20px 14px 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); overflow-x: auto; }
 .mchart { display: flex; gap: 8px; align-items: flex-end; min-width: 640px; }
 .mbar-col { flex: 1; display: flex; flex-direction: column; align-items: center; }
@@ -69,7 +52,15 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 .mlegend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px; padding-top: 12px; border-top: 1px solid #eef4f4; }
 .mlegend span { font-size: 11px; color: #4a6a6a; display: flex; align-items: center; gap: 5px; }
 .mlegend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-
+/* 3期比較 */
+.ychart-wrap { background: white; border-radius: 12px; padding: 20px 20px 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+.ychart { display: flex; gap: 20px; align-items: flex-end; justify-content: center; padding: 0 10px; }
+.ybar-col { flex: 1; max-width: 150px; display: flex; flex-direction: column; align-items: center; }
+.ybar-val { font-size: 15px; font-weight: 800; color: #0a4f4f; margin-bottom: 6px; }
+.ybar-stack { width: 100%; display: flex; flex-direction: column-reverse; border-radius: 6px 6px 0 0; overflow: hidden; }
+.ybar-stack.cur { box-shadow: 0 0 0 3px #ffd060; border-radius: 6px 6px 0 0; }
+.ybar-lbl { font-size: 12px; font-weight: 700; color: #0a4f4f; margin-top: 8px; text-align: center; line-height: 1.4; }
+.ybar-lbl span { font-size: 10px; color: #8a9a9a; font-weight: 500; }
 .rev-breakdown { margin-top: 14px; }
 .rev-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 .rev-label { font-size: 11px; color: #6a8a8a; width: 42px; flex-shrink: 0; font-weight: 600; }
@@ -81,11 +72,19 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 .bar-kyosei { background: linear-gradient(90deg,#7040a0,#9a60d0); }
 .bar-hanpan { background: linear-gradient(90deg,#b07020,#d09040); }
 .rev-amount { font-size: 12px; font-weight: 700; color: #1a2e2e; width: 118px; flex-shrink: 0; text-align: right; }
-
 .info-box { background: #e8f8f0; border-left: 4px solid #2e9e5a; border-radius: 0 10px 10px 0; padding: 14px 16px; font-size: 13px; margin-top: 14px; }
 .info-box h4 { font-weight: 700; margin-bottom: 8px; color: #1a5a3a; }
 .info-box p { line-height: 1.65; color: #2a4a3a; }
-
+.info-box.blue { background: #eef2ff; border-color: #4060d0; }
+.info-box.blue h4 { color: #2a40a0; }
+.info-box.blue p { color: #2a3060; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+.compare-table th { background: #0d6e6e; color: white; padding: 9px 10px; text-align: left; font-weight: 600; }
+.compare-table td { padding: 9px 10px; border-bottom: 1px solid #eef4f4; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table .num { text-align: right; font-weight: 700; }
+.compare-table .up { color: #2e9e5a; }
+.compare-table .dn { color: #e07d30; }
 .half-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .half-card { background: white; border-radius: 12px; padding: 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
 .half-card.h1 { border-top: 4px solid #7bb0b0; }
@@ -99,7 +98,6 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 .half-growth { background: linear-gradient(135deg,#2e9e5a,#42b57a); color: white; border-radius: 12px; padding: 18px; text-align: center; margin-top: 12px; }
 .half-growth .big { font-size: 32px; font-weight: 800; }
 .half-growth .cap { font-size: 12px; opacity: 0.9; margin-top: 4px; }
-
 .daily-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
 .daily-table th { background: #0a4f4f; color: white; padding: 8px 6px; text-align: center; font-weight: 600; font-size: 11px; position: sticky; top: 44px; }
 .daily-table td { padding: 7px 6px; text-align: right; border-bottom: 1px solid #eef4f4; }
@@ -110,7 +108,6 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 .daily-table .tag.low { background: #f0e0e0; color: #8a3010; }
 .daily-table .total-row { background: #0a4f4f; color: white; font-weight: 700; }
 .daily-table .total-row td { border-bottom: none; color: white; }
-
 .hl-list { display: flex; flex-direction: column; gap: 10px; }
 .hl-card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 5px rgba(0,0,0,0.06); border-left: 4px solid #2e9e5a; }
 .hl-card.purple { border-left-color: #7040a0; }
@@ -118,7 +115,6 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 .hl-card.blue { border-left-color: #4060d0; }
 .hl-title { font-size: 14px; font-weight: 700; color: #0a4f4f; margin-bottom: 5px; }
 .hl-desc { font-size: 12.5px; color: #4a6a6a; line-height: 1.65; }
-
 .message-card { background: white; border-radius: 14px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
 .msg-body { font-size: 13.5px; line-height: 1.85; color: #2a3a3a; }
 .msg-body p { margin-bottom: 12px; }
@@ -128,37 +124,35 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
 .msg-focus-item:last-child { margin-bottom: 0; }
 .focus-num { background: #7040a0; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 .focus-text { font-size: 13px; color: #3a2a5a; line-height: 1.6; }
-
 .table-note { font-size: 11px; color: #6a8a8a; line-height: 1.6; background: white; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-top: 10px; }
-
 @media (max-width: 600px) {
   .header h1 { font-size: 20px; }
   .header-stats { gap: 14px; }
   .header-stat .val { font-size: 19px; }
   .content { padding: 16px 10px; }
   .half-grid { grid-template-columns: 1fr; }
+  .ychart { gap: 10px; }
 }
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-badge">🎉 開院3周年・第3期 通期実績レポート</div>
   <h1>リベ大デンタル大阪院<br>3期目 通期実績レポート</h1>
   <div class="subtitle">第3期：2025年7月 〜 2026年6月（12ヶ月・351稼働日）</div>
-  <div class="updated">作成日：2026年7月2日 ／ 出典：売上確認シート（全月検算一致）</div>
+  <div class="updated">作成日：2026年7月2日 ／ 出典：公式実績表・日次売上シート（検算一致）</div>
   <div class="header-stats">
-    <div class="header-stat"><div class="val">¥2.74億</div><div class="lbl">通期売上合計</div></div>
+    <div class="header-stat"><div class="val">¥2.74億</div><div class="lbl">第3期 売上合計</div></div>
+    <div class="header-stat"><div class="val">高水準を維持</div><div class="lbl">対2期（¥2.82億）</div></div>
     <div class="header-stat"><div class="val">13,679人</div><div class="lbl">年間総来院数</div></div>
-    <div class="header-stat"><div class="val">39.0人/日</div><div class="lbl">平均患者数</div></div>
     <div class="header-stat"><div class="val">54.2%</div><div class="lbl">通期非保険率</div></div>
-    <div class="header-stat"><div class="val">+44%</div><div class="lbl">下期成長（対上期）</div></div>
+    <div class="header-stat"><div class="val">+44.7%</div><div class="lbl">下期成長（対上期）</div></div>
   </div>
 </div>
-
 <div class="nav-wrap">
   <nav class="nav">
     <a href="#summary" class="active">通期サマリー</a>
+    <a href="#years">年度推移（3期比較）</a>
     <a href="#monthly">月次推移</a>
     <a href="#half">上期 vs 下期</a>
     <a href="#table">月別データ</a>
@@ -166,257 +160,280 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
     <a href="#message">院長メッセージ</a>
   </nav>
 </div>
-
 <div class="content">
 
   <!-- 通期サマリー -->
   <div class="section" id="summary">
-    <div class="section-header">
-      <div class="section-icon">📊</div>
-      <h2>第3期 通期サマリー</h2>
-      <span class="badge green">確定値</span>
-    </div>
+    <div class="section-header"><div class="section-icon">📊</div><h2>第3期 通期サマリー</h2><span class="badge green">公式確定値</span></div>
     <div class="cards" style="margin-bottom:16px;">
-      <div class="card">
-        <div class="lbl">通期売上合計</div>
-        <div class="val lg">¥2.74億</div>
-        <div class="sub">¥273,538,573（12ヶ月）</div>
-        <div class="delta up">▲ 下期は上期比+44%成長</div>
-      </div>
-      <div class="card">
-        <div class="lbl">自費診療（年間）</div>
-        <div class="val">¥9,031万</div>
-        <div class="sub">全体の33.0%</div>
-        <div class="delta up">▲ 5月・6月に過去最高更新</div>
-      </div>
-      <div class="card">
-        <div class="lbl">矯正（年間）</div>
-        <div class="val">¥5,805万</div>
-        <div class="sub">全体の21.2%</div>
-        <div class="delta up">▲ 3〜5月に大きく飛躍</div>
-      </div>
-      <div class="card">
-        <div class="lbl">物販（年間）</div>
-        <div class="val">¥645万</div>
-        <div class="sub">全体の2.4%</div>
-        <div class="delta up">▲ 7月比で年末に約4倍へ</div>
-      </div>
+      <div class="card"><div class="lbl">第3期 売上合計</div><div class="val lg">¥2.74億</div><div class="sub">¥273,828,700（12ヶ月）</div><div class="delta neutral">→ 2期¥2.82億の高水準を維持</div></div>
+      <div class="card"><div class="lbl">保険収入（年間）</div><div class="val">¥1.19億</div><div class="sub">全体の43.4%</div><div class="delta up">▲ 3期連続で過去最高を更新</div></div>
+      <div class="card"><div class="lbl">自費+矯正（年間）</div><div class="val">¥1.48億</div><div class="sub">全体の54.2%（うち矯正¥5,805万）</div><div class="delta neutral">→ 後半に力強く回復</div></div>
+      <div class="card"><div class="lbl">物販（年間）</div><div class="val">¥643万</div><div class="sub">全体の2.3%</div><div class="delta up">▲ 3期連続で過去最高</div></div>
     </div>
-
     <div class="card">
-      <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">年間売上構成（¥273,538,573）</div>
+      <div style="font-size:13px;font-weight:700;color:#0a4f4f;margin-bottom:12px;">年間売上構成（¥273,828,700）</div>
       <div class="rev-breakdown">
-        <div class="rev-row"><div class="rev-label">保険</div>
-          <div class="rev-bar-wrap"><div class="rev-bar bar-hoken" style="width:43.4%"><span>43.4%</span></div></div>
-          <div class="rev-amount">¥1億1,873万</div></div>
-        <div class="rev-row"><div class="rev-label">自費</div>
-          <div class="rev-bar-wrap"><div class="rev-bar bar-jihi" style="width:33.0%"><span>33.0%</span></div></div>
-          <div class="rev-amount">¥9,031万</div></div>
-        <div class="rev-row"><div class="rev-label">矯正</div>
-          <div class="rev-bar-wrap"><div class="rev-bar bar-kyosei" style="width:21.2%"><span>21.2%</span></div></div>
-          <div class="rev-amount">¥5,805万</div></div>
-        <div class="rev-row"><div class="rev-label">物販</div>
-          <div class="rev-bar-wrap"><div class="rev-bar bar-hanpan" style="width:2.4%"><span></span></div></div>
-          <div class="rev-amount">¥645万</div></div>
+        <div class="rev-row"><div class="rev-label">保険</div><div class="rev-bar-wrap"><div class="rev-bar bar-hoken" style="width:43.4%"><span>43.4%</span></div></div><div class="rev-amount">¥1億1,897万</div></div>
+        <div class="rev-row"><div class="rev-label">自費</div><div class="rev-bar-wrap"><div class="rev-bar bar-jihi" style="width:33.0%"><span>33.0%</span></div></div><div class="rev-amount">¥9,038万</div></div>
+        <div class="rev-row"><div class="rev-label">矯正</div><div class="rev-bar-wrap"><div class="rev-bar bar-kyosei" style="width:21.2%"><span>21.2%</span></div></div><div class="rev-amount">¥5,805万</div></div>
+        <div class="rev-row"><div class="rev-label">物販</div><div class="rev-bar-wrap"><div class="rev-bar bar-hanpan" style="width:2.3%"><span></span></div></div><div class="rev-amount">¥643万</div></div>
       </div>
     </div>
-
     <div class="info-box">
-      <h4>📌 第3期の総括：後半に大きく飛躍した1年</h4>
-      <p>年間売上¥2.74億を達成。前半（7〜12月）は月商¥1,700〜2,200万で安定推移していましたが、<b>2026年2月から上昇に転じ、3月に矯正が大きく伸長、3〜6月は月商¥3,000万前後の新ステージ</b>へ入りました。特に<b>自費診療は5月・6月に月間過去最高を連続更新</b>、<b>物販は7月¥30万から6月¥117万へ約4倍</b>に成長。医院全体の提案力と診療の質が、年間を通じて着実に高まった1年でした。</p>
+      <h4>📌 第3期の総括：急成長の翌年、高い水準をしっかり守り切った1年</h4>
+      <p>第3期の売上は¥2.74億。急成長した第2期（¥2.82億）とほぼ同水準（−2.9%）を維持しました。<b>保険収入¥1.19億・物販¥643万はいずれも過去最高</b>を更新。年前半（7〜12月）は月商¥1,700〜2,200万にやや落ち込みましたが、<b>後半（1〜6月）は+44.7%と力強く回復し、第2期ピーク水準の月商¥3,000万前後まで戻しました</b>。特定の誰かに依存せず、チームとして安定した実績を出せる医院に近づいた1年でした。</p>
+    </div>
+  </div>
+
+  <!-- 年度推移 3期比較 -->
+  <div class="section" id="years">
+    <div class="section-header"><div class="section-icon">🏥</div><h2>開院からの年度推移（3期比較）</h2><span class="badge green">公式実績表</span></div>
+    <div class="ychart-wrap">
+      <div class="ychart">
+      <div class="ybar-col">
+        <div class="ybar-val">¥1.01億</div>
+        <div class="ybar-stack " style="height:210px;">
+          <div class="mseg s-bup" style="height:1.4px;"></div>
+          <div class="mseg s-jih" style="height:29.5px;"></div>
+          <div class="mseg s-hok" style="height:44.2px;"></div>
+        </div>
+        <div class="ybar-lbl">第1期<br><span>2023/7〜2024/6</span></div>
+      </div>
+      <div class="ybar-col">
+        <div class="ybar-val">¥2.82億</div>
+        <div class="ybar-stack " style="height:210px;">
+          <div class="mseg s-bup" style="height:3.7px;"></div>
+          <div class="mseg s-jih" style="height:126.3px;"></div>
+          <div class="mseg s-hok" style="height:80.0px;"></div>
+        </div>
+        <div class="ybar-lbl">第2期<br><span>2024/7〜2025/6</span></div>
+      </div>
+      <div class="ybar-col">
+        <div class="ybar-val">¥2.74億</div>
+        <div class="ybar-stack cur" style="height:210px;">
+          <div class="mseg s-bup" style="height:4.8px;"></div>
+          <div class="mseg s-jih" style="height:110.5px;"></div>
+          <div class="mseg s-hok" style="height:88.5px;"></div>
+        </div>
+        <div class="ybar-lbl">第3期<br><span>2025/7〜2026/6</span></div>
+      </div>
+      </div>
+      <div class="mlegend" style="justify-content:center;">
+        <span><i class="s-hok"></i>保険</span>
+        <span><i class="s-jih"></i>自費（矯正含む）</span>
+        <span><i class="s-bup"></i>物販</span>
+      </div>
+    </div>
+    <div style="overflow-x:auto;margin-top:14px;">
+      <table class="compare-table">
+        <thead><tr><th>項目</th><th class="num">第1期</th><th class="num">第2期</th><th class="num">第3期</th><th class="num">1→2期</th><th class="num">2→3期</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>保険収入</td>
+            <td class="num">¥5,936万</td>
+            <td class="num">¥10,746万</td>
+            <td class="num">¥11,897万</td>
+            <td class="num up">+81.0%</td>
+            <td class="num up">+10.7%</td>
+          </tr>
+          <tr>
+            <td>自費収入(矯正込)</td>
+            <td class="num">¥3,960万</td>
+            <td class="num">¥16,966万</td>
+            <td class="num">¥14,843万</td>
+            <td class="num up">+328.4%</td>
+            <td class="num dn">-12.5%</td>
+          </tr>
+          <tr>
+            <td>物販収入</td>
+            <td class="num">¥189万</td>
+            <td class="num">¥502万</td>
+            <td class="num">¥643万</td>
+            <td class="num up">+165.3%</td>
+            <td class="num up">+28.1%</td>
+          </tr>
+          <tr>
+            <td>売上合計</td>
+            <td class="num">¥1.01億</td>
+            <td class="num">¥2.82億</td>
+            <td class="num">¥2.74億</td>
+            <td class="num up">+179.8%</td>
+            <td class="num dn">-2.9%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box blue">
+      <h4>📌 読みどころ：2期で急成長、3期でそれを定着</h4>
+      <p>開院初年度（1期）¥1.01億から、2期は¥2.82億へ<b>+180%の急成長</b>。3期はそこから−2.9%とほぼ横ばいで、<b>「一気に伸びた売上を落とさず維持できた」</b>ことが最大の成果です。保険収入は3期連続で過去最高を更新し、収益の土台が着実に厚くなっています。（会計上、矯正は「自費」に含めて計上されています）</p>
     </div>
   </div>
 
   <!-- 月次推移 -->
   <div class="section" id="monthly">
-    <div class="section-header">
-      <div class="section-icon">📈</div>
-      <h2>月次売上推移（12ヶ月）</h2>
-    </div>
+    <div class="section-header"><div class="section-icon">📈</div><h2>第3期 月次売上推移（12ヶ月）</h2></div>
     <div class="mchart-wrap">
       <div class="mchart">
       <div class="mbar-col">
         <div class="mbar-val">¥2,241万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:1.8px;" title="物販 ¥297,490"></div>
-          <div class="mseg s-kyo" style="height:35.4px;" title="矯正 ¥5,773,000"></div>
-          <div class="mseg s-jih" style="height:40.6px;" title="自費 ¥6,604,100"></div>
-          <div class="mseg s-hok" style="height:59.8px;" title="保険 ¥9,738,370"></div>
+          <div class="mseg s-bup" style="height:1.8px;"></div>
+          <div class="mseg s-kyo" style="height:35.2px;"></div>
+          <div class="mseg s-jih" style="height:40.3px;"></div>
+          <div class="mseg s-hok" style="height:59.4px;"></div>
         </div>
         <div class="mbar-lbl">07月</div>
       </div>
       <div class="mbar-col">
         <div class="mbar-val">¥1,689万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:1.4px;" title="物販 ¥232,950"></div>
-          <div class="mseg s-kyo" style="height:13.5px;" title="矯正 ¥2,191,200"></div>
-          <div class="mseg s-jih" style="height:40.0px;" title="自費 ¥6,517,850"></div>
-          <div class="mseg s-hok" style="height:48.8px;" title="保険 ¥7,950,040"></div>
+          <div class="mseg s-bup" style="height:1.4px;"></div>
+          <div class="mseg s-kyo" style="height:13.4px;"></div>
+          <div class="mseg s-jih" style="height:39.8px;"></div>
+          <div class="mseg s-hok" style="height:48.6px;"></div>
         </div>
         <div class="mbar-lbl">08月</div>
       </div>
       <div class="mbar-col">
-        <div class="mbar-val">¥1,855万</div>
+        <div class="mbar-val">¥1,864万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:1.9px;" title="物販 ¥309,963"></div>
-          <div class="mseg s-kyo" style="height:19.1px;" title="矯正 ¥3,112,900"></div>
-          <div class="mseg s-jih" style="height:41.4px;" title="自費 ¥6,743,000"></div>
-          <div class="mseg s-hok" style="height:51.5px;" title="保険 ¥8,385,400"></div>
+          <div class="mseg s-bup" style="height:1.9px;"></div>
+          <div class="mseg s-kyo" style="height:19.0px;"></div>
+          <div class="mseg s-jih" style="height:41.2px;"></div>
+          <div class="mseg s-hok" style="height:51.7px;"></div>
         </div>
         <div class="mbar-lbl">09月</div>
       </div>
       <div class="mbar-col">
-        <div class="mbar-val">¥1,705万</div>
+        <div class="mbar-val">¥1,698万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:2.1px;" title="物販 ¥333,970"></div>
-          <div class="mseg s-kyo" style="height:17.4px;" title="矯正 ¥2,832,400"></div>
-          <div class="mseg s-jih" style="height:35.0px;" title="自費 ¥5,705,950"></div>
-          <div class="mseg s-hok" style="height:50.2px;" title="保険 ¥8,177,190"></div>
+          <div class="mseg s-bup" style="height:2.0px;"></div>
+          <div class="mseg s-kyo" style="height:17.3px;"></div>
+          <div class="mseg s-jih" style="height:34.8px;"></div>
+          <div class="mseg s-hok" style="height:49.5px;"></div>
         </div>
         <div class="mbar-lbl">10月</div>
       </div>
       <div class="mbar-col">
-        <div class="mbar-val">¥1,968万</div>
+        <div class="mbar-val">¥1,949万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:2.0px;" title="物販 ¥322,100"></div>
-          <div class="mseg s-kyo" style="height:19.8px;" title="矯正 ¥3,228,500"></div>
-          <div class="mseg s-jih" style="height:45.3px;" title="自費 ¥7,379,300"></div>
-          <div class="mseg s-hok" style="height:53.7px;" title="保険 ¥8,750,120"></div>
+          <div class="mseg s-bup" style="height:1.9px;"></div>
+          <div class="mseg s-kyo" style="height:19.7px;"></div>
+          <div class="mseg s-jih" style="height:45.0px;"></div>
+          <div class="mseg s-hok" style="height:52.3px;"></div>
         </div>
         <div class="mbar-lbl">11月</div>
       </div>
       <div class="mbar-col">
-        <div class="mbar-val">¥1,740万</div>
+        <div class="mbar-val">¥1,746万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:2.7px;" title="物販 ¥435,290"></div>
-          <div class="mseg s-kyo" style="height:15.7px;" title="矯正 ¥2,558,500"></div>
-          <div class="mseg s-jih" style="height:35.8px;" title="自費 ¥5,822,350"></div>
-          <div class="mseg s-hok" style="height:52.7px;" title="保険 ¥8,585,230"></div>
+          <div class="mseg s-bup" style="height:2.7px;"></div>
+          <div class="mseg s-kyo" style="height:15.6px;"></div>
+          <div class="mseg s-jih" style="height:35.5px;"></div>
+          <div class="mseg s-hok" style="height:52.8px;"></div>
         </div>
         <div class="mbar-lbl">12月</div>
       </div>
       <div class="mbar-col">
-        <div class="mbar-val">¥1,708万</div>
+        <div class="mbar-val">¥1,709万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:1.8px;" title="物販 ¥300,570"></div>
-          <div class="mseg s-kyo" style="height:2.9px;" title="矯正 ¥467,500"></div>
-          <div class="mseg s-jih" style="height:46.1px;" title="自費 ¥7,503,750"></div>
-          <div class="mseg s-hok" style="height:54.1px;" title="保険 ¥8,806,010"></div>
+          <div class="mseg s-bup" style="height:1.8px;"></div>
+          <div class="mseg s-kyo" style="height:2.9px;"></div>
+          <div class="mseg s-jih" style="height:45.8px;"></div>
+          <div class="mseg s-hok" style="height:53.8px;"></div>
         </div>
         <div class="mbar-lbl">01月</div>
       </div>
       <div class="mbar-col">
-        <div class="mbar-val">¥2,096万</div>
+        <div class="mbar-val">¥2,111万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:2.7px;" title="物販 ¥437,680"></div>
-          <div class="mseg s-kyo" style="height:19.4px;" title="矯正 ¥3,164,700"></div>
-          <div class="mseg s-jih" style="height:44.8px;" title="自費 ¥7,292,700"></div>
-          <div class="mseg s-hok" style="height:61.8px;" title="保険 ¥10,060,840"></div>
+          <div class="mseg s-bup" style="height:2.7px;"></div>
+          <div class="mseg s-kyo" style="height:19.3px;"></div>
+          <div class="mseg s-jih" style="height:45.0px;"></div>
+          <div class="mseg s-hok" style="height:61.9px;"></div>
         </div>
         <div class="mbar-lbl">02月</div>
       </div>
       <div class="mbar-col">
-        <div class="mbar-val">¥3,006万</div>
+        <div class="mbar-val">¥3,004万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:3.4px;" title="物販 ¥550,520"></div>
-          <div class="mseg s-kyo" style="height:58.7px;" title="矯正 ¥9,557,800"></div>
-          <div class="mseg s-jih" style="height:49.0px;" title="自費 ¥7,986,600"></div>
-          <div class="mseg s-hok" style="height:73.4px;" title="保険 ¥11,960,520"></div>
+          <div class="mseg s-bup" style="height:3.4px;"></div>
+          <div class="mseg s-kyo" style="height:58.3px;"></div>
+          <div class="mseg s-jih" style="height:48.7px;"></div>
+          <div class="mseg s-hok" style="height:72.9px;"></div>
         </div>
         <div class="mbar-lbl">03月</div>
       </div>
       <div class="mbar-col">
-        <div class="mbar-val">¥3,257万</div>
+        <div class="mbar-val">¥3,277万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:5.7px;" title="物販 ¥934,680"></div>
-          <div class="mseg s-kyo" style="height:72.0px;" title="矯正 ¥11,722,600"></div>
-          <div class="mseg s-jih" style="height:48.4px;" title="自費 ¥7,885,950"></div>
-          <div class="mseg s-hok" style="height:73.9px;" title="保険 ¥12,026,750"></div>
+          <div class="mseg s-bup" style="height:5.7px;"></div>
+          <div class="mseg s-kyo" style="height:71.5px;"></div>
+          <div class="mseg s-jih" style="height:48.1px;"></div>
+          <div class="mseg s-hok" style="height:74.6px;"></div>
         </div>
         <div class="mbar-lbl">04月</div>
       </div>
       <div class="mbar-col">
-        <div class="mbar-val">¥3,122万</div>
+        <div class="mbar-val">¥3,127万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:6.9px;" title="物販 ¥1,119,340"></div>
-          <div class="mseg s-kyo" style="height:43.5px;" title="矯正 ¥7,088,400"></div>
-          <div class="mseg s-jih" style="height:63.0px;" title="自費 ¥10,265,150"></div>
-          <div class="mseg s-hok" style="height:78.3px;" title="保険 ¥12,747,930"></div>
+          <div class="mseg s-bup" style="height:6.8px;"></div>
+          <div class="mseg s-kyo" style="height:43.3px;"></div>
+          <div class="mseg s-jih" style="height:62.6px;"></div>
+          <div class="mseg s-hok" style="height:78.1px;"></div>
         </div>
         <div class="mbar-lbl">05月</div>
       </div>
       <div class="mbar-col">
         <div class="mbar-val">¥2,967万</div>
         <div class="mbar-stack" style="height:200px;">
-          <div class="mseg s-bup" style="height:7.2px;" title="物販 ¥1,171,100"></div>
-          <div class="mseg s-kyo" style="height:39.0px;" title="矯正 ¥6,347,800"></div>
-          <div class="mseg s-jih" style="height:65.1px;" title="自費 ¥10,606,600"></div>
-          <div class="mseg s-hok" style="height:70.9px;" title="保険 ¥11,545,920"></div>
+          <div class="mseg s-bup" style="height:7.1px;"></div>
+          <div class="mseg s-kyo" style="height:38.7px;"></div>
+          <div class="mseg s-jih" style="height:64.7px;"></div>
+          <div class="mseg s-hok" style="height:70.5px;"></div>
         </div>
         <div class="mbar-lbl">06月</div>
       </div>
       </div>
       <div class="mlegend">
-        <span><i class="s-hok"></i>保険</span>
-        <span><i class="s-jih"></i>自費</span>
-        <span><i class="s-kyo"></i>矯正</span>
-        <span><i class="s-bup"></i>物販</span>
+        <span><i class="s-hok"></i>保険</span><span><i class="s-jih"></i>自費</span><span><i class="s-kyo"></i>矯正</span><span><i class="s-bup"></i>物販</span>
       </div>
     </div>
     <div class="info-box">
       <h4>📌 グラフの読みどころ</h4>
-      <p>最高月商は<b>2026年4月¥3,257万</b>（矯正¥1,172万）。最低は8月¥1,689万（夏枯れ）。1月は矯正が¥47万まで落ち込むも、2月以降で力強く回復。<b>年後半にかけて緑（自費）とオレンジ（物販）の層が厚くなっている</b>のが、質の高い診療への転換を表しています。</p>
+      <p>最高月商は<b>2026年4月¥3,277万</b>（矯正¥1,172万の大型案件）。最低は8月¥1,689万（夏枯れ）。1月は矯正が¥47万まで落ち込むも、2月以降で力強く回復。<b>年後半にかけて緑（自費）とオレンジ（物販）の層が厚くなっている</b>のが、質の高い診療への転換を表しています。</p>
     </div>
   </div>
 
-  <!-- 上期 vs 下期 -->
+  <!-- 上期vs下期 -->
   <div class="section" id="half">
-    <div class="section-header">
-      <div class="section-icon">⚖️</div>
-      <h2>上期 vs 下期 比較</h2>
-    </div>
+    <div class="section-header"><div class="section-icon">⚖️</div><h2>第3期 上期 vs 下期</h2></div>
     <div class="half-grid">
-      <div class="half-card h1">
-        <h3>上期</h3>
-        <div class="period">2025年7月〜12月（176稼働日）</div>
-        <div class="half-row"><span class="k">売上合計</span><span class="v">¥1億1,199万</span></div>
-        <div class="half-row"><span class="k">自費</span><span class="v">¥3,877万</span></div>
-        <div class="half-row"><span class="k">矯正</span><span class="v">¥1,970万</span></div>
-        <div class="half-row"><span class="k">物販</span><span class="v">¥193万</span></div>
-        <div class="half-row"><span class="k">平均患者数</span><span class="v">36.2人/日</span></div>
-        <div class="half-row"><span class="k">非保険率</span><span class="v">52.2%</span></div>
+      <div class="half-card h1"><h3>上期</h3><div class="period">2025年7月〜12月</div>
+        <div class="half-row"><span class="k">売上合計</span><span class="v">¥1億1,188万</span></div>
+        <div class="half-row"><span class="k">保険</span><span class="v">¥5,150万</span></div>
+        <div class="half-row"><span class="k">自費+矯正</span><span class="v">¥5,847万</span></div>
+        <div class="half-row"><span class="k">物販</span><span class="v">¥192万</span></div>
+        <div class="half-row"><span class="k">非保険率</span><span class="v">52.3%</span></div>
       </div>
-      <div class="half-card h2">
-        <h3>下期</h3>
-        <div class="period">2026年1月〜6月（175稼働日）</div>
-        <div class="half-row"><span class="k">売上合計</span><span class="v">¥1億6,155万</span></div>
-        <div class="half-row"><span class="k">自費</span><span class="v">¥5,154万</span></div>
-        <div class="half-row"><span class="k">矯正</span><span class="v">¥3,835万</span></div>
+      <div class="half-card h2"><h3>下期</h3><div class="period">2026年1月〜6月</div>
+        <div class="half-row"><span class="k">売上合計</span><span class="v">¥1億6,194万</span></div>
+        <div class="half-row"><span class="k">保険</span><span class="v">¥6,747万</span></div>
+        <div class="half-row"><span class="k">自費+矯正</span><span class="v">¥8,996万</span></div>
         <div class="half-row"><span class="k">物販</span><span class="v">¥451万</span></div>
-        <div class="half-row"><span class="k">平均患者数</span><span class="v">41.8人/日</span></div>
         <div class="half-row"><span class="k">非保険率</span><span class="v">55.6%</span></div>
       </div>
     </div>
-    <div class="half-growth">
-      <div class="big">+44.3%</div>
-      <div class="cap">下期売上は上期比+44%成長（同じ約175稼働日で¥4,956万の増加）</div>
-    </div>
+    <div class="half-growth"><div class="big">+44.7%</div><div class="cap">下期売上は上期比+44.7%成長（¥5,006万の増加）。第2期ピーク水準まで回復しました</div></div>
   </div>
 
   <!-- 月別データ -->
   <div class="section" id="table">
-    <div class="section-header">
-      <div class="section-icon">📅</div>
-      <h2>月別データ一覧</h2>
-      <span class="badge green">確定値</span>
-    </div>
+    <div class="section-header"><div class="section-icon">📅</div><h2>月別データ一覧</h2><span class="badge green">公式確定値</span></div>
     <div style="overflow-x:auto;">
       <table class="daily-table">
-        <thead>
-          <tr>
-            <th>月</th><th>売上合計</th><th>保険</th><th>自費</th><th>矯正</th><th>物販</th><th>患者数</th><th>平均/日</th><th>非保険率</th>
-          </tr>
-        </thead>
+        <thead><tr><th>月</th><th>売上合計</th><th>保険</th><th>自費</th><th>矯正</th><th>物販</th><th>患者数</th><th>平均/日</th><th>非保険率</th></tr></thead>
         <tbody>
           <tr>
             <td>25/07</td>
@@ -426,61 +443,61 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
           </tr>
           <tr>
             <td>25/08</td>
-            <td><b>16,892,040</b></td><td>7,950,040</td><td>6,517,850</td><td>2,191,200</td><td>232,950</td>
+            <td><b>16,890,540</b></td><td>7,956,670</td><td>6,517,850</td><td>2,191,200</td><td>224,820</td>
             <td>1,009</td><td>35人</td>
             <td class="rate"><span class="tag mid">52%</span></td>
           </tr>
           <tr>
             <td>25/09</td>
-            <td><b>18,551,263</b></td><td>8,385,400</td><td>6,743,000</td><td>3,112,900</td><td>309,963</td>
+            <td><b>18,641,390</b></td><td>8,475,500</td><td>6,743,000</td><td>3,112,900</td><td>309,990</td>
             <td>1,026</td><td>34人</td>
             <td class="rate"><span class="tag mid">53%</span></td>
           </tr>
           <tr>
             <td>25/10</td>
-            <td><b>17,049,510</b></td><td>8,177,190</td><td>5,705,950</td><td>2,832,400</td><td>333,970</td>
+            <td><b>16,980,390</b></td><td>8,108,070</td><td>5,705,950</td><td>2,832,400</td><td>333,970</td>
             <td>997</td><td>34人</td>
             <td class="rate"><span class="tag mid">50%</span></td>
           </tr>
           <tr>
             <td>25/11</td>
-            <td><b>19,680,020</b></td><td>8,750,120</td><td>7,379,300</td><td>3,228,500</td><td>322,100</td>
+            <td><b>19,494,370</b></td><td>8,571,690</td><td>7,379,300</td><td>3,228,500</td><td>314,880</td>
             <td>1,071</td><td>37人</td>
             <td class="rate"><span class="tag mid">54%</span></td>
           </tr>
           <tr>
             <td>25/12</td>
-            <td><b>17,401,370</b></td><td>8,585,230</td><td>5,822,350</td><td>2,558,500</td><td>435,290</td>
+            <td><b>17,464,100</b></td><td>8,647,960</td><td>5,822,350</td><td>2,558,500</td><td>435,290</td>
             <td>1,054</td><td>36人</td>
-            <td class="rate"><span class="tag mid">48%</span></td>
+            <td class="rate"><span class="tag low">48%</span></td>
           </tr>
           <tr>
             <td>26/01</td>
-            <td><b>17,077,830</b></td><td>8,806,010</td><td>7,503,750</td><td>467,500</td><td>300,570</td>
+            <td><b>17,088,230</b></td><td>8,816,410</td><td>7,503,750</td><td>467,500</td><td>300,570</td>
             <td>1,063</td><td>38人</td>
             <td class="rate"><span class="tag low">47%</span></td>
           </tr>
           <tr>
             <td>26/02</td>
-            <td><b>20,955,920</b></td><td>10,060,840</td><td>7,292,700</td><td>3,164,700</td><td>437,680</td>
+            <td><b>21,107,820</b></td><td>10,135,740</td><td>7,369,700</td><td>3,164,700</td><td>437,680</td>
             <td>1,186</td><td>44人</td>
             <td class="rate"><span class="tag mid">50%</span></td>
           </tr>
           <tr>
             <td>26/03</td>
-            <td><b>30,055,440</b></td><td>11,960,520</td><td>7,986,600</td><td>9,557,800</td><td>550,520</td>
+            <td><b>30,040,320</b></td><td>11,950,900</td><td>7,981,100</td><td>9,557,800</td><td>550,520</td>
             <td>1,320</td><td>44人</td>
             <td class="rate"><span class="tag high">58%</span></td>
           </tr>
           <tr>
             <td>26/04</td>
-            <td><b>32,569,980</b></td><td>12,026,750</td><td>7,885,950</td><td>11,722,600</td><td>934,680</td>
+            <td><b>32,771,520</b></td><td>12,227,260</td><td>7,885,950</td><td>11,722,600</td><td>935,710</td>
             <td>1,258</td><td>42人</td>
             <td class="rate"><span class="tag high">60%</span></td>
           </tr>
           <tr>
             <td>26/05</td>
-            <td><b>31,220,820</b></td><td>12,747,930</td><td>10,265,150</td><td>7,088,400</td><td>1,119,340</td>
+            <td><b>31,265,640</b></td><td>12,792,750</td><td>10,265,150</td><td>7,088,400</td><td>1,119,340</td>
             <td>1,317</td><td>42人</td>
             <td class="rate"><span class="tag high">56%</span></td>
           </tr>
@@ -492,86 +509,60 @@ body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f0
           </tr>
           <tr class="total-row">
             <td>通期</td>
-            <td>273,538,573</td><td>118,734,320</td><td>90,313,300</td><td>58,045,300</td><td>6,445,653</td>
+            <td>273,828,700</td><td>118,967,240</td><td>90,384,800</td><td>58,045,300</td><td>6,431,360</td>
             <td>13,679</td><td>39人</td><td>54%</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="table-note">
-      <p>出典：売上確認シート（全月、検算一致）。非保険率＝（自費＋矯正）÷売上合計。稼働日は売上発生日ベース。</p>
-      <p>最高月商：<b>26/04 ¥3,257万</b>／最低月商：<b>25/08 ¥1,689万</b>／最高自費月：<b>26/06 ¥1,061万</b>／最高矯正月：<b>26/04 ¥1,172万</b></p>
+      <p>出典：公式実績表（保険・自費・物販）＋日次売上シート（矯正の内訳・患者数）。両ソースは検算一致（差0.1%＝保険返金の計上タイミング）。非保険率＝（自費＋矯正）÷売上合計。会計上、矯正は「自費」に含めて計上されます。</p>
+      <p>最高月商：<b>26/04 ¥3,277万</b>／最低月商：<b>25/08 ¥1,689万</b>／最高自費月：<b>26/06</b>／最高矯正月：<b>26/04 ¥1,172万</b></p>
     </div>
   </div>
 
-  <!-- 3期目ハイライト -->
+  <!-- ハイライト -->
   <div class="section" id="highlight">
-    <div class="section-header">
-      <div class="section-icon">⭐</div>
-      <h2>第3期のハイライト・トピックス</h2>
-    </div>
+    <div class="section-header"><div class="section-icon">⭐</div><h2>第3期のハイライト・トピックス</h2></div>
     <div class="hl-list">
-      <div class="hl-card blue">
-        <div class="hl-title">🏥 常勤Dr（のぶ先生）退職後も売上を維持</div>
-        <div class="hl-desc">5月末にのぶ（清水）先生が退職。常勤ドクターが1名減という大きな体制変化がありながら、6月の売上は¥2,967万・目標104%を達成。1人あたり自費単価の向上でカバーし、チーム全体の底力で乗り越えました。「人が変わっても回る医院」への大きな一歩です。</div>
-      </div>
-      <div class="hl-card">
-        <div class="hl-title">💎 自費メンテのグレードアップ（¥16,500→¥22,000）</div>
-        <div class="hl-desc">6月、自費メンテナンスをプレミアムコースへと再設計。単に値上げするのではなく、フッ素トレー法・診療記録レポートなど「価値ごとアップグレード」する方針をチーム全員で議論・決定。診療の質を価格に正しく反映させる、第4期の柱となる取り組みです。</div>
-      </div>
-      <div class="hl-card orange">
-        <div class="hl-title">🛍️ 物販が年間で約4倍に成長</div>
-        <div class="hl-desc">7月¥30万から6月¥117万へ、月商ベースで約4倍。スタッフ一人ひとりの提案力が育ち、患者さんのセルフケアを支える物販が確かな収益の柱に。5月・6月は月間過去最高を連続更新しました。</div>
-      </div>
-      <div class="hl-card purple">
-        <div class="hl-title">🦷 矯正が下期に大きく飛躍</div>
-        <div class="hl-desc">1月に一度¥47万まで落ち込んだ矯正が、2月以降で急回復。3月¥956万・4月¥1,172万と過去最高水準へ。年間矯正売上¥5,805万を記録し、医院の大きな成長エンジンになりました。</div>
-      </div>
-      <div class="hl-card">
-        <div class="hl-title">🌸 マーラさん、経営企画室へ（感謝を込めて）</div>
-        <div class="hl-desc">6月30日をもって、開院から3年間大阪院を支え続けてくれた歯科助手のマーラさんが、同じリベ大グループの経営企画室へ。医院の礎を一緒に築いてくれた仲間の新たな挑戦を、大阪院一同、心から応援しています。</div>
-      </div>
+      <div class="hl-card blue"><div class="hl-title">💰 急成長した売上水準を維持</div><div class="hl-desc">第2期に¥1.01億→¥2.82億へ急成長した売上を、第3期も¥2.74億とほぼ同水準でキープ。保険収入は3期連続で過去最高を更新し、収益基盤が着実に厚くなりました。「伸びた実績を落とさない」という、成長期の次に大切なフェーズを乗り切った1年です。</div></div>
+      <div class="hl-card"><div class="hl-title">🏥 常勤Dr（のぶ先生）退職後も売上を維持</div><div class="hl-desc">5月末にのぶ（清水）先生が退職。常勤ドクターが1名減という体制変化の中でも、6月の売上は¥2,967万を確保。1人あたりの自費単価向上でカバーし、チーム全体の底力で乗り越えました。</div></div>
+      <div class="hl-card purple"><div class="hl-title">🦷 矯正が後半に大きく飛躍</div><div class="hl-desc">1月に一度¥47万まで落ち込んだ矯正が、2月以降で急回復。3月¥956万・4月¥1,172万と大型案件が続き、年間矯正売上¥5,805万を記録。医院の大きな収益エンジンになりました。</div></div>
+      <div class="hl-card orange"><div class="hl-title">🛍️ 物販が3期連続で過去最高</div><div class="hl-desc">物販収入は1期¥189万→2期¥502万→3期¥643万と着実に成長。ハイドロソニック（電動歯ブラシ）などのセルフケア提案が定着し、5月・6月は月間過去最高を連続更新しました。</div></div>
+      <div class="hl-card"><div class="hl-title">💎 自費メンテのグレードアップ（¥16,500→¥22,000）</div><div class="hl-desc">6月、自費メンテナンスをプレミアムコースへ再設計。単なる値上げではなく、フッ素トレー法・診療記録レポートなど「価値ごとアップグレード」する方針をチーム全員で議論・決定。第4期の柱となる取り組みです。</div></div>
+      <div class="hl-card"><div class="hl-title">🌸 マーラさん、経営企画室へ（感謝を込めて）</div><div class="hl-desc">6月30日をもって、開院から3年間大阪院を支え続けてくれた歯科助手のマーラさんが、同じリベ大グループの経営企画室へ。医院の礎を一緒に築いてくれた仲間の新たな挑戦を、大阪院一同、心から応援しています。</div></div>
     </div>
   </div>
 
   <!-- 院長メッセージ -->
   <div class="section" id="message">
-    <div class="section-header">
-      <div class="section-icon">💬</div>
-      <h2>院長メッセージ</h2>
-    </div>
+    <div class="section-header"><div class="section-icon">💬</div><h2>院長メッセージ</h2></div>
     <div class="message-card">
       <div class="msg-body">
-        <p>おかげさまで、大阪院は開院から丸3年を迎えることができました。第3期は年間売上¥2.74億、総来院数13,679人。数字以上に大きかったのは、<b>「後半にかけて力強く伸びた」というチームの成長曲線</b>そのものだと思っています。</p>
-        <p>前半は月商¥1,700〜2,200万で足場を固め、2月からギアが上がり、3月以降は月商¥3,000万前後の新しいステージへ。自費は過去最高を、物販は約4倍を実現しました。これは、スタッフ一人ひとりが患者さんに真剣に向き合い、必要な治療とケアを丁寧に届け続けてくれた結果です。</p>
+        <p>おかげさまで、大阪院は開院から丸3年を迎えることができました。第3期は売上¥2.74億。急成長した第2期（¥2.82億）の水準を、ほぼそのまま維持できた1年でした。派手な数字ではありませんが、<b>「一度伸びた実績を落とさずに走り続ける」</b>ことの難しさを思うと、これはチーム全員の大きな成果だと思っています。</p>
+        <p>年の前半は少し数字が落ち込みました。それでも下期は+44.7%と力強く回復し、第2期のピーク水準まで戻すことができました。保険収入は3期連続で過去最高、物販も過去最高。土台となる部分が、着実に厚くなっています。</p>
         <p>期の終盤には、のぶ先生の退職、そしてマーラさんの新たな門出という節目もありました。それでも医院が売上を落とさず前に進めたのは、<b>特定の誰かに依存せず、チームとして強くなってきた</b>証だと感じています。</p>
-        <p>3年間、支えてくださった患者さん、スタッフのみんな、本当にありがとうございました。第4期も、質を第一に、大阪の地域医療に貢献していきましょう。</p>
+        <p>3年間、支えてくださった患者さん、スタッフのみんな、本当にありがとうございました。第4期は、維持から再成長へ。質を第一に、大阪の地域医療に貢献していきましょう。</p>
       </div>
       <div class="msg-focus">
         <h4>🎯 第4期に向けて</h4>
-        <div class="msg-focus-item"><div class="focus-num">1</div>
-          <div class="focus-text"><b>新体制での診療品質の維持・向上</b>　── 人が変わっても揺るがない、質の高い診療体制をさらに強固にします</div></div>
-        <div class="msg-focus-item"><div class="focus-num">2</div>
-          <div class="focus-text"><b>自費メンテ プレミアム化の実装・定着</b>　── ¥22,000の価値をしっかり届け、自費診療の基盤を一段引き上げます</div></div>
-        <div class="msg-focus-item"><div class="focus-num">3</div>
-          <div class="focus-text"><b>非保険率60%・患者数45人/日の安定達成</b>　── 下期の勢いを通年で維持し、全KPIの安定達成を目指します</div></div>
+        <div class="msg-focus-item"><div class="focus-num">1</div><div class="focus-text"><b>維持から「再成長」へ</b>　── 高水準を守れた3期を土台に、前半の落ち込みをなくし通年で安定した成長を目指します</div></div>
+        <div class="msg-focus-item"><div class="focus-num">2</div><div class="focus-text"><b>自費メンテ プレミアム化の実装・定着</b>　── ¥22,000の価値をしっかり届け、自費診療の基盤を一段引き上げます</div></div>
+        <div class="msg-focus-item"><div class="focus-num">3</div><div class="focus-text"><b>新体制での診療品質の維持・向上</b>　── 人が変わっても揺るがない、質の高い診療体制をさらに強固にします</div></div>
       </div>
     </div>
   </div>
 
 </div>
-
 <script>
 const navLinks = document.querySelectorAll('.nav a');
 const sections = document.querySelectorAll('.section');
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(l => l.classList.remove('active'));
-      const a = document.querySelector('.nav a[href="#'+e.target.id+'"]');
-      if (a) a.classList.add('active');
-    }
-  });
+  entries.forEach(e => { if (e.isIntersecting) {
+    navLinks.forEach(l => l.classList.remove('active'));
+    const a = document.querySelector('.nav a[href="#'+e.target.id+'"]');
+    if (a) a.classList.add('active');
+  }});
 }, { rootMargin: '-30% 0px -60% 0px' });
 sections.forEach(s => observer.observe(s));
 </script>
